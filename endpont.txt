@@ -1,0 +1,12 @@
+        "@media (min-width: 320px) and (max-width: 600px)": {
+   
+        },
+
+        /* Tablets */
+        "@media(min-width: 601px) and (max-width: 1023px)": {
+        },
+
+        /* Desktop */
+        "@media(min-width: 1024px)": {
+   
+        }
