@@ -48,7 +48,7 @@ jobs:
       - name: Installer les dépendances
         run: |
           cd frontend
-          npm install
+          npm install --force
 
       - name: Construire l'application
         run: |
@@ -98,7 +98,7 @@ jobs:
 
 
 
-            
+
   notification:
     needs: deploy-frontend
     runs-on: ubuntu-latest
