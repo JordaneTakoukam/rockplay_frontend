@@ -1,58 +1,185 @@
+// import { makeStyles } from "@mui/styles";
+// import { Box } from "@mui/material";
+// import { useEffect } from "react";
+// import { getTransactionHistory } from "redux/actions/auth";
+// import { useSelector } from "react-redux";
+// import { useState } from "react";
+
+// const useStyles = makeStyles(() => ({
+//     MainLayout: {
+//         padding: 33
+//     },
+//     ListLayout: {
+//         background: '#424253',
+//         width: '100%',
+//         padding: 20,
+//         borderRadius: 7
+//     },
+//     TransactionRow: {
+//         background: '#2C2C3A',
+//         borderRadius: 7,
+//         width: '100%',
+//         height: 50,
+//         marginBottom: 7,
+//         display: 'flex',
+//         alignItems: 'center',
+//         gap: 8,
+//         padding: 5
+//     },
+//     TransactionCoinIcon: {
+//         width: 32,
+//         height: 32
+//     },
+//     TransactionAmount: {
+//         color: '#FFF',
+//         fontFamily: 'Styrene A Web',
+//         fontSize: 14,
+//         fontWeight: 700,
+//         width: '100%',
+//     },
+//     TransactionCoinTypeBox: {
+//         background: '#2C2C3A',
+//         padding: '0px 5px',
+//         borderRadius: 4,
+//         fontWeight: 'bold',
+//         color: '#EC4F5B',
+//         textTransform: 'uppercase',
+//         fontSize: 13,
+//         whiteSpace: 'pre',
+//         border: 'solid 1px #363646'
+//     }
+// }));
+
+// const HistoryContainer = () => {
+//     const classes = useStyles();
+
+//     const authData = useSelector((state) => state.authentication);
+//     const currencyData = useSelector((state) => state.currencyOption);
+//     const currencies = currencyData.currencies;
+
+//     const [transactions, setTransactions] = useState([]);
+
+//     useEffect(() => {
+//         initFunc();
+//         // eslint-disable-next-line
+//     }, []);
+
+//     const initFunc = async () => {
+//         if (authData.isAuth) {
+//             const request = {
+//                 userId: authData.userData._id
+//             };
+//             const response = await getTransactionHistory(request);
+//             if (response.status) {
+//                 let _transactions = [...transactions];
+//                 // eslint-disable-next-line
+//                 response.data.map((walletData) => {
+//                     // eslint-disable-next-line
+//                     walletData.transactionData.map((transaction) => {
+//                         const currencyData = currencies.find((item) => item.name === transaction.currency.coinType && item.token === transaction.currency.type);
+//                         const pushData = {
+//                             currencyData,
+//                             amount: transaction.amount,
+//                             txId: transaction.txId
+//                         };
+//                         _transactions.push(pushData);
+//                     })
+//                 });
+//                 console.log(_transactions);
+//                 setTransactions([..._transactions]);
+//             }
+//         }
+//     };
+
+//     return (
+//         <Box className={classes.MainLayout}>
+//             <Box className={classes.ListLayout}>
+//                 {
+//                     transactions.map((item, index) => (
+//                         <Box key={index} className={classes.TransactionRow}>
+//                             <img className={classes.TransactionCoinIcon} src={`/assets/images/coins/${item.currencyData.name.toLowerCase()}.png`} alt='icon' />
+//                             <span className={classes.TransactionAmount}>
+//                                 {
+//                                     item.amount.toFixed(item.currencyData.decimal)
+//                                 }
+//                             </span>
+//                             <Box className={classes.TransactionCoinTypeBox}>
+//                                 {
+//                                     (item.currencyData.token === 'native' || item.currencyData.token === '') ? item.currencyData.name
+//                                         : `${item.currencyData.name}(${item.currencyData.token})`
+//                                 }
+//                             </Box>
+//                         </Box>
+//                     ))
+//                 }
+//             </Box>
+//         </Box>
+//     );
+// };
+
+// export default HistoryContainer;
+
 import { makeStyles } from "@mui/styles";
-import { Box } from "@mui/material";
-import { useEffect } from "react";
+import { Box, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { getTransactionHistory } from "redux/actions/auth";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+
+import TrendingDownIcon from "@mui/icons-material/TrendingDown"; // Dépôt
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom"; // Retrait en attente
+import CheckCircleIcon from "@mui/icons-material/CheckCircle"; // Retrait confirmé
 
 const useStyles = makeStyles(() => ({
     MainLayout: {
-        padding: 33
+        padding: 33,
     },
     ListLayout: {
-        background: '#424253',
-        width: '100%',
+        background: "#424253",
+        width: "100%",
         padding: 20,
-        borderRadius: 7
+        borderRadius: 7,
     },
     TransactionRow: {
-        background: '#2C2C3A',
+        background: "#2C2C3A",
         borderRadius: 7,
-        width: '100%',
-        height: 50,
-        marginBottom: 7,
-        display: 'flex',
-        alignItems: 'center',
-        gap: 8,
-        padding: 5
+        width: "100%",
+        height: "auto",
+        marginBottom: 10,
+        display: "flex",
+        alignItems: "center",
+        gap: 12,
+        padding: 10,
     },
     TransactionCoinIcon: {
-        width: 32,
-        height: 32
+        width: 40,
+        height: 40,
     },
-    TransactionAmount: {
-        color: '#FFF',
-        fontFamily: 'Styrene A Web',
-        fontSize: 14,
+    TransactionContent: {
+        display: "flex",
+        flexDirection: "column",
+        flex: 1,
+    },
+    Amount: {
         fontWeight: 700,
-        width: '100%',
+        fontSize: 16,
     },
-    TransactionCoinTypeBox: {
-        background: '#2C2C3A',
-        padding: '0px 5px',
-        borderRadius: 4,
-        fontWeight: 'bold',
-        color: '#EC4F5B',
-        textTransform: 'uppercase',
+    TxId: {
         fontSize: 13,
-        whiteSpace: 'pre',
-        border: 'solid 1px #363646'
-    }
+        color: "#aaa",
+    },
+    StatusBox: {
+        display: "flex",
+        alignItems: "center",
+        gap: 6,
+        fontWeight: 600,
+        fontSize: 14,
+        padding: "4px 8px",
+        borderRadius: 5,
+    },
 }));
 
 const HistoryContainer = () => {
     const classes = useStyles();
-
     const authData = useSelector((state) => state.authentication);
     const currencyData = useSelector((state) => state.currencyOption);
     const currencies = currencyData.currencies;
@@ -60,58 +187,85 @@ const HistoryContainer = () => {
     const [transactions, setTransactions] = useState([]);
 
     useEffect(() => {
-        initFunc();
+        if (authData.isAuth) initFunc();
         // eslint-disable-next-line
     }, []);
 
     const initFunc = async () => {
-        if (authData.isAuth) {
-            const request = {
-                userId: authData.userData._id
-            };
-            const response = await getTransactionHistory(request);
-            if (response.status) {
-                let _transactions = [...transactions];
-                // eslint-disable-next-line
-                response.data.map((walletData) => {
-                    // eslint-disable-next-line
-                    walletData.transactionData.map((transaction) => {
-                        const currencyData = currencies.find((item) => item.name === transaction.currency.coinType && item.token === transaction.currency.type);
-                        const pushData = {
-                            currencyData,
-                            amount: transaction.amount,
-                            txId: transaction.txId
-                        };
-                        _transactions.push(pushData);
-                    })
+        const response = await getTransactionHistory({ userId: authData.userData._id });
+        if (response.status) {
+            const history = [];
+            response.data.forEach((walletData) => {
+                walletData.transactionData.forEach((transaction) => {
+                    const currency = currencies.find(
+                        (item) => item.name === transaction.currency.coinType && item.token === transaction.currency.type
+                    );
+
+                    history.push({
+                        currency,
+                        amount: transaction.amount,
+                        txId: transaction.txId,
+                        pending: transaction.pending,
+                        withdraw_request: transaction.withdraw_request,
+                    });
                 });
-                console.log(_transactions);
-                setTransactions([..._transactions]);
-            }
+            });
+            setTransactions(history);
+        }
+    };
+
+    const getStatusInfo = (item) => {
+        if (item.pending === -1) {
+            return {
+                label: "Deposit",
+                icon: <TrendingDownIcon style={{ color: "#4caf50" }} />,
+                color: "#4caf50",
+            };
+        } else if (item.withdraw_request === 1) {
+            return {
+                label: "Pending withdrawal",
+                icon: <HourglassBottomIcon style={{ color: "#ff9800" }} />,
+                color: "#ff9800",
+            };
+        } else {
+            return {
+                label: "Withdrawal confirmed",
+                icon: <CheckCircleIcon style={{ color: "#f44336" }} />,
+                color: "#f44336",
+            };
         }
     };
 
     return (
         <Box className={classes.MainLayout}>
             <Box className={classes.ListLayout}>
-                {
-                    transactions.map((item, index) => (
+                {transactions.map((item, index) => {
+                    const status = getStatusInfo(item);
+                    return (
                         <Box key={index} className={classes.TransactionRow}>
-                            <img className={classes.TransactionCoinIcon} src={`/assets/images/coins/${item.currencyData.name.toLowerCase()}.png`} alt='icon' />
-                            <span className={classes.TransactionAmount}>
-                                {
-                                    item.amount.toFixed(item.currencyData.decimal)
-                                }
-                            </span>
-                            <Box className={classes.TransactionCoinTypeBox}>
-                                {
-                                    (item.currencyData.token === 'native' || item.currencyData.token === '') ? item.currencyData.name
-                                        : `${item.currencyData.name}(${item.currencyData.token})`
-                                }
+                            <img
+                                className={classes.TransactionCoinIcon}
+                                src={`/assets/images/coins/${item.currency.coinType.toLowerCase()}.png`}
+                                alt="icon"
+                            />
+                            <Box className={classes.TransactionContent}>
+                                <Typography className={classes.Amount} style={{ color: status.color }}>
+                                    {item.amount.toFixed(item.currency.decimal)} {item.currency.name}
+                                </Typography>
+                                <Typography className={classes.TxId}>
+                                    TX: {item.txId?.slice(0, 8)}...{item.txId?.slice(-6)}
+                                </Typography>
+                            </Box>
+                            <Box
+                                className={classes.StatusBox}
+                                style={{ backgroundColor: status.color + "22", color: status.color }}
+                            >
+                                {status.icon}
+                                {status.label}
                             </Box>
                         </Box>
-                    ))
-                }
+                    );
+                })}
             </Box>
         </Box>
     );

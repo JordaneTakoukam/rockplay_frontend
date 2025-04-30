@@ -544,12 +544,12 @@ const WalletModal = ({ open, setOpen }) => {
                         >
                             Withdraw
                         </Button>
-                        <Button
+                        {/* <Button
                             onClick={() => handlePageType(2)}
                             className={pageType === 2 ? clsx(classes.PageOptionButton, classes.SelectedOption) : classes.PageOptionButton}
                         >
                             Swap
-                        </Button>
+                        </Button> */}
                         <Button
                             onClick={() => handlePageType(3)}
                             className={pageType === 3 ? clsx(classes.PageOptionButton, classes.SelectedOption) : classes.PageOptionButton}
@@ -698,10 +698,10 @@ const WalletModal = ({ open, setOpen }) => {
                             </Box>
                         </Box>
                     }
-                    {
+                    {/* {
                         pageType === 2 &&
                         <SwapContainer />
-                    }
+                    } */}
                     {
                         pageType === 3 &&
                         <HistoryContainer />
