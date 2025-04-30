@@ -76,15 +76,15 @@ const HistoryContainer = () => {
         const response = await getTransactionHistory({ userId: authData.userData._id });
         if (response.status) {
             const history = [];
-            console.log(`response.data = ${response.data}`);
+            console.log(`response.data = ${JSON.stringify(response.data)}`);
             response.data.forEach((walletData) => {
-                console.log(`walletData = ${walletData}`);
+                console.log(`walletData = ${JSON.stringify(walletData)}`);
 
                 walletData.transactionData.forEach((transaction) => {
 
-                    console.log(`currencyData = ${currencyData}`);
-                    console.log(`currencies = ${currencies}`);
-                    console.warn("transaction :", transaction);
+                    console.log(`currencyData = ${JSON.stringify(currencyData, null, 2)}`);
+                    console.log(`currencies = ${JSON.stringify(currencies, null, 2)}`);
+                    console.warn("transaction:", JSON.stringify(transaction, null, 2));
 
 
                     // Recherche de la devise par son `name` et `token`
