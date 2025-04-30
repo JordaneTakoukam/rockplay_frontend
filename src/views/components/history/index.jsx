@@ -71,25 +71,29 @@ const HistoryContainer = () => {
     }, []);
 
     const initFunc = async () => {
-
-
         const response = await getTransactionHistory({ userId: authData.userData._id });
         if (response.status) {
             const history = [];
-            console.log(`response.data = ${JSON.stringify(response.data)}`);
+
+            console.log("response.data =", JSON.stringify(response.data, null, 2));
+
             response.data.forEach((walletData) => {
-                console.log(`walletData = ${JSON.stringify(walletData)}`);
+                console.log("walletData =", JSON.stringify(walletData, null, 2));
 
                 walletData.transactionData.forEach((transaction) => {
-
-                    console.log(`currencyData = ${JSON.stringify(currencyData, null, 2)}`);
-                    console.log(`currencies = ${JSON.stringify(currencies, null, 2)}`);
                     console.warn("transaction:", JSON.stringify(transaction, null, 2));
 
+                    const { coinType, type } = transaction.currency || {};
 
-                    // Recherche de la devise par son `name` et `token`
+                    if (!coinType || !type) {
+                        console.error("transaction.currency est invalide ou manquant:", transaction.currency);
+                        return; // On ignore cette transaction invalide
+                    }
+
                     const currency = currencies.find(
-                        (item) => item.name === transaction.currency.name.toLowerCase() && item.token === transaction.currency.token.toLowerCase()
+                        (item) =>
+                            item.name.toLowerCase() === coinType.toLowerCase() &&
+                            item.token.toLowerCase() === type.toLowerCase()
                     );
 
                     if (currency) {
@@ -101,13 +105,12 @@ const HistoryContainer = () => {
                             withdraw_request: transaction.withdraw_request,
                         });
                     } else {
+                        console.warn("Devise non trouvée pour:", coinType, type);
                     }
                 });
             });
 
-            // Log de la liste historique dans la console
             console.log("Historique des transactions :", history);
-
             setTransactions(history);
         }
     };
@@ -142,7 +145,6 @@ const HistoryContainer = () => {
                         const status = getStatusInfo(item);
                         return (
                             <Box key={index} className={classes.TransactionRow}>
-                                {/* Vérification de la validité de la donnée avant d'afficher l'icône */}
                                 <img
                                     className={classes.TransactionCoinIcon}
                                     src={`/assets/images/coins/${item.currency.name.toLowerCase()}.png`}
@@ -167,7 +169,7 @@ const HistoryContainer = () => {
                         );
                     })
                 ) : (
-                    <Typography style={{ color: '#fff' }}>No transactions found.</Typography>
+                    <Typography style={{ color: "#fff" }}>No transactions found.</Typography>
                 )}
             </Box>
         </Box>
