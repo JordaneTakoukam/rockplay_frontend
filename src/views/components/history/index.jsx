@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { getTransactionHistory } from "redux/actions/auth";
 import { useSelector } from "react-redux";
 
-import TrendingDownIcon from "@mui/icons-material/TrendingDown"; // Dépôt
+import TrendingDownIcon from "@mui/icons-material/TrendingDown"; // Dépôt confirmé
+import TrendingUpIcon from "@mui/icons-material/TrendingUp"; // Retrait confirmé
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom"; // Retrait en attente
-import CheckCircleIcon from "@mui/icons-material/CheckCircle"; // Retrait confirmé
+import AddIcon from "@mui/icons-material/Add"; // + pour dépôts
+import RemoveIcon from "@mui/icons-material/Remove"; // - pour retraits
 
 const useStyles = makeStyles(() => ({
     MainLayout: {
@@ -41,6 +43,8 @@ const useStyles = makeStyles(() => ({
     Amount: {
         fontWeight: 700,
         fontSize: 16,
+        display: "flex",
+        alignItems: "center",
     },
     TxId: {
         fontSize: 13,
@@ -75,20 +79,11 @@ const HistoryContainer = () => {
         if (response.status) {
             const history = [];
 
-            console.log("response.data =", JSON.stringify(response.data, null, 2));
-
             response.data.forEach((walletData) => {
-                console.log("walletData =", JSON.stringify(walletData, null, 2));
-
                 walletData.transactionData.forEach((transaction) => {
-                    console.warn("transaction:", JSON.stringify(transaction, null, 2));
-
                     const { coinType, type } = transaction.currency || {};
 
-                    if (!coinType || !type) {
-                        console.error("transaction.currency est invalide ou manquant:", transaction.currency);
-                        return; // On ignore cette transaction invalide
-                    }
+                    if (!coinType || !type) return;
 
                     const currency = currencies.find(
                         (item) =>
@@ -103,41 +98,38 @@ const HistoryContainer = () => {
                             txId: transaction.txId,
                             pending: transaction.pending,
                             withdraw_request: transaction.withdraw_request,
+                            type_transaction: transaction.type_transaction, // Important pour statut
                         });
-                    } else {
-                        console.warn("Devise non trouvée pour:", coinType, type);
                     }
                 });
             });
 
-            console.log("Historique des transactions :", history);
             setTransactions(history);
         }
     };
 
     const getStatusInfo = (item) => {
-        // depot
-        if (item.type_transaction === "deposit") {
+        if (item.type_transaction !== "withdraw") {
             return {
-                label: "Deposit",
+                label: "Deposit confirmed",
                 icon: <TrendingDownIcon style={{ color: "#4caf50" }} />,
                 color: "#4caf50",
+                isDeposit: true,
             };
-        }
-
-        // retrait
-        else {
+        } else {
             if (item.withdraw_request === 1) {
                 return {
                     label: "Pending withdrawal",
                     icon: <HourglassBottomIcon style={{ color: "#ff9800" }} />,
                     color: "#ff9800",
+                    isDeposit: false,
                 };
             } else if (item.withdraw_request === 0) {
                 return {
                     label: "Withdrawal confirmed",
-                    icon: <CheckCircleIcon style={{ color: "#f44336" }} />,
+                    icon: <TrendingUpIcon style={{ color: "#f44336" }} />,
                     color: "#f44336",
+                    isDeposit: false,
                 };
             }
         }
@@ -149,6 +141,12 @@ const HistoryContainer = () => {
                 {transactions.length > 0 ? (
                     transactions.map((item, index) => {
                         const status = getStatusInfo(item);
+                        const amountIcon = status.isDeposit ? (
+                            <AddIcon fontSize="small" style={{ marginRight: 4 }} />
+                        ) : (
+                            <RemoveIcon fontSize="small" style={{ marginRight: 4 }} />
+                        );
+
                         return (
                             <Box key={index} className={classes.TransactionRow}>
                                 <img
@@ -158,6 +156,7 @@ const HistoryContainer = () => {
                                 />
                                 <Box className={classes.TransactionContent}>
                                     <Typography className={classes.Amount} style={{ color: status.color }}>
+                                        {amountIcon}
                                         {item.amount?.toFixed(item.currency?.decimal)} {item.currency?.name}
                                     </Typography>
                                     <Typography className={classes.TxId}>
