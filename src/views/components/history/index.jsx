@@ -8,6 +8,9 @@ import TrendingDownIcon from "@mui/icons-material/TrendingDown"; // Dépôt
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom"; // Retrait en attente
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"; // Retrait confirmé
 
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"; // Flèche bas
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";     // Flèche haut
+
 const useStyles = makeStyles(() => ({
     MainLayout: {
         padding: 33,
@@ -41,6 +44,9 @@ const useStyles = makeStyles(() => ({
     Amount: {
         fontWeight: 700,
         fontSize: 16,
+        display: "flex",
+        alignItems: "center",
+        gap: 6,
     },
     TxId: {
         fontSize: 13,
@@ -75,25 +81,12 @@ const HistoryContainer = () => {
         if (response.status) {
             const history = [];
 
-            console.log("response.data =", JSON.stringify(response.data, null, 2));
-
             response.data.forEach((walletData) => {
-                console.log("walletData =", JSON.stringify(walletData, null, 2));
-
                 walletData.transactionData.forEach((transaction) => {
-                    console.warn("transaction:", JSON.stringify(transaction, null, 2));
-
-                    const { coinType, type } = transaction.currency || {};
-
-                    if (!coinType || !type) {
-                        console.error("transaction.currency est invalide ou manquant:", transaction.currency);
-                        return; // On ignore cette transaction invalide
-                    }
-
                     const currency = currencies.find(
                         (item) =>
-                            item.name.toLowerCase() === coinType.toLowerCase() &&
-                            item.token.toLowerCase() === type.toLowerCase()
+                            item.name.toLowerCase() === transaction.currency?.name?.toLowerCase() &&
+                            item.token.toLowerCase() === transaction.currency?.token?.toLowerCase()
                     );
 
                     if (currency) {
@@ -103,37 +96,43 @@ const HistoryContainer = () => {
                             txId: transaction.txId,
                             pending: transaction.pending,
                             withdraw_request: transaction.withdraw_request,
+                            type_transaction: transaction.type_transaction,
                         });
-                    } else {
-                        console.warn("Devise non trouvée pour:", coinType, type);
                     }
                 });
             });
 
-            console.log("Historique des transactions :", history);
             setTransactions(history);
         }
     };
 
     const getStatusInfo = (item) => {
-        if (item.pending === -1) {
+        if (item.type_transaction === "deposit") {
             return {
                 label: "Deposit",
                 icon: <TrendingDownIcon style={{ color: "#4caf50" }} />,
                 color: "#4caf50",
-            };
-        } else if (item.withdraw_request === 1) {
-            return {
-                label: "Pending withdrawal",
-                icon: <HourglassBottomIcon style={{ color: "#ff9800" }} />,
-                color: "#ff9800",
+                prefix: "+",
+                arrowIcon: <KeyboardArrowDownIcon style={{ fontSize: 18 }} />,
             };
         } else {
-            return {
-                label: "Withdrawal confirmed",
-                icon: <CheckCircleIcon style={{ color: "#f44336" }} />,
-                color: "#f44336",
-            };
+            if (item.withdraw_request === 1) {
+                return {
+                    label: "Pending withdrawal",
+                    icon: <HourglassBottomIcon style={{ color: "#ff9800" }} />,
+                    color: "#ff9800",
+                    prefix: "-",
+                    arrowIcon: <KeyboardArrowUpIcon style={{ fontSize: 18 }} />,
+                };
+            } else {
+                return {
+                    label: "Withdrawal confirmed",
+                    icon: <CheckCircleIcon style={{ color: "#f44336" }} />,
+                    color: "#f44336",
+                    prefix: "-",
+                    arrowIcon: <KeyboardArrowUpIcon style={{ fontSize: 18 }} />,
+                };
+            }
         }
     };
 
@@ -152,7 +151,9 @@ const HistoryContainer = () => {
                                 />
                                 <Box className={classes.TransactionContent}>
                                     <Typography className={classes.Amount} style={{ color: status.color }}>
+                                        {status.prefix}
                                         {item.amount?.toFixed(item.currency?.decimal)} {item.currency?.name}
+                                        {status.arrowIcon}
                                     </Typography>
                                     <Typography className={classes.TxId}>
                                         TX: {item.txId?.slice(0, 8)}...{item.txId?.slice(-6)}
