@@ -53,6 +53,11 @@ jobs:
       - name: Construire l'application
         run: |
           cd frontend
+          REACT_APP_GOOGLE_CLIENT=${{ secrets.REACT_APP_GOOGLE_CLIENT }} \
+          REACT_APP_MODE=${{ vars.REACT_APP_MODE }} \
+          NODE_ENV=${{ vars.NODE_ENV }} \
+          PUBLIC_URL=${{ vars.PUBLIC_URL }} \
+          GENERATE_SOURCEMAP=${{ vars.GENERATE_SOURCEMAP }} \
           npm run build
 
       - name: Vérifier le contenu du dossier build local (GitHub)
@@ -95,9 +100,6 @@ jobs:
             echo "=== Redémarrage de nginx ==="
             sudo systemctl restart nginx
             echo "✓ Déploiement réussi !"
-
-
-
 
   notification:
     needs: deploy-frontend
