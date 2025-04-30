@@ -76,20 +76,25 @@ const HistoryContainer = () => {
             const history = [];
             response.data.forEach((walletData) => {
                 walletData.transactionData.forEach((transaction) => {
+                    // Recherche de la devise par son `name` et `token`
                     const currency = currencies.find(
-                        (item) => item.name === transaction.currency.coinType && item.token === transaction.currency.type
+                        (item) => item.name === transaction.currency.name && item.token === transaction.currency.token
                     );
 
-                    history.push({
-                        currency,
-                        amount: transaction.amount,
-                        txId: transaction.txId,
-                        pending: transaction.pending,
-                        withdraw_request: transaction.withdraw_request,
-                    });
+                    if (currency) {
+                        history.push({
+                            currency,
+                            amount: transaction.amount,
+                            txId: transaction.txId,
+                            pending: transaction.pending,
+                            withdraw_request: transaction.withdraw_request,
+                        });
+                    } else {
+                        console.warn("Devise non trouvée pour cette transaction :", transaction);
+                    }
                 });
             });
-            
+
             // Log de la liste historique dans la console
             console.log("Historique des transactions :", history);
 
@@ -122,29 +127,17 @@ const HistoryContainer = () => {
     return (
         <Box className={classes.MainLayout}>
             <Box className={classes.ListLayout}>
-                {transactions
-                    .filter((item) => {
-                        const valid = item.currency && item.currency.coinType;
-                        if (!valid) {
-                            console.warn("Transaction ignorée (données incomplètes) :", item);
-                        }
-                        return valid;
-                    })
-                    .map((item, index) => {
+                {transactions.length > 0 ? (
+                    transactions.map((item, index) => {
                         const status = getStatusInfo(item);
                         return (
                             <Box key={index} className={classes.TransactionRow}>
                                 {/* Vérification de la validité de la donnée avant d'afficher l'icône */}
-                                {!item.currency || !item.currency.coinType ? (
-                                    console.warn("Transaction avec données manquantes :", item),
-                                    null
-                                ) : (
-                                    <img
-                                        className={classes.TransactionCoinIcon}
-                                        src={`/assets/images/coins/${item.currency.coinType.toLowerCase()}.png`}
-                                        alt="icon"
-                                    />
-                                )}
+                                <img
+                                    className={classes.TransactionCoinIcon}
+                                    src={`/assets/images/coins/${item.currency.name.toLowerCase()}.png`}
+                                    alt="icon"
+                                />
                                 <Box className={classes.TransactionContent}>
                                     <Typography className={classes.Amount} style={{ color: status.color }}>
                                         {item.amount?.toFixed(item.currency?.decimal)} {item.currency?.name}
@@ -162,7 +155,10 @@ const HistoryContainer = () => {
                                 </Box>
                             </Box>
                         );
-                    })}
+                    })
+                ) : (
+                    <Typography>No transactions found.</Typography>
+                )}
             </Box>
         </Box>
     );
