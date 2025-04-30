@@ -71,14 +71,25 @@ const HistoryContainer = () => {
     }, []);
 
     const initFunc = async () => {
+
+
         const response = await getTransactionHistory({ userId: authData.userData._id });
         if (response.status) {
             const history = [];
+            console.log(`response.data = ${response.data}`);
             response.data.forEach((walletData) => {
+                console.log(`walletData = ${walletData}`);
+
                 walletData.transactionData.forEach((transaction) => {
+
+                    console.log(`currencyData = ${currencyData}`);
+                    console.log(`currencies = ${currencies}`);
+                    console.warn("transaction :", transaction);
+
+
                     // Recherche de la devise par son `name` et `token`
                     const currency = currencies.find(
-                        (item) => item.name === transaction.currency.name && item.token === transaction.currency.token
+                        (item) => item.name === transaction.currency.name.toLowerCase() && item.token === transaction.currency.token.toLowerCase()
                     );
 
                     if (currency) {
@@ -90,7 +101,6 @@ const HistoryContainer = () => {
                             withdraw_request: transaction.withdraw_request,
                         });
                     } else {
-                        console.warn("Devise non trouvée pour cette transaction :", transaction);
                     }
                 });
             });
@@ -157,7 +167,7 @@ const HistoryContainer = () => {
                         );
                     })
                 ) : (
-                    <Typography>No transactions found.</Typography>
+                    <Typography style={{ color: '#fff' }}>No transactions found.</Typography>
                 )}
             </Box>
         </Box>
