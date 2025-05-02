@@ -11,9 +11,11 @@ const max = 500; // $ (montant maximal en USD)
 
 // Configuration des précisions par devise
 const precisionByCurrency = {
+    bnb: 5,
+
+    
     btc: 7,
     eth: 6,
-    bnb: 5,
     trx: 3,
     mup: 0,
     sol: 5,
@@ -110,7 +112,7 @@ const configWithdraw = {
     bnb: {
         // fee: 0.000084, // ~ 0.053$
         fee: 0.000085, // ~ 0.053$
-        min: 0.001,
+        min: 0.002,
         max: 0.5 // ~ 500$
     },
 };

@@ -44,7 +44,7 @@ const useStyles = makeStyles(() => ({
             padding: '8px 14px'
         },
         "@media (min-width: 682px)": {
-            width: 'calc(100% - 17px)' 
+            width: 'calc(100% - 17px)'
         }
     },
     LogoBox: {
@@ -57,7 +57,7 @@ const useStyles = makeStyles(() => ({
             marginLeft: '30px', // Appliquer une marge gauche uniquement à partir du desktop
         },
     },
-    
+
     LogoIcon: {
         "@media (max-width: 940px)": {
             display: 'none'
@@ -267,7 +267,7 @@ const useStyles = makeStyles(() => ({
             width: '230px',
             height: '47px'
         },
-            "@media (max-width: 915px)": {
+        "@media (max-width: 915px)": {
             width: '210px',
             height: '47px'
         },
@@ -327,7 +327,7 @@ const useStyles = makeStyles(() => ({
             marginRight: '0px',
         },
     },
-    
+
 }));
 
 let signoutModal = false;
@@ -399,7 +399,7 @@ const MainHeader = () => {
 
     const getCurrencyData = async () => {
         const response = await getCurrencies();
-        
+
         if (response.status) {
             let data = [];
             // eslint-disable-next-line
@@ -537,21 +537,23 @@ const MainHeader = () => {
                             className={classes.CustomSelect}
                             disabled={!authData.isAuth}
                         >
-                        
+
                             {
                                 currencies.map((currency, index) => {
-                                    let currencyBalance = (authData.balanceData && authData.balanceData.length > 0) ? authData.balanceData.find((data) => data.coinType === currency.name && data.type === currency.token) : { balance: 0 };
-                                  
+                                    let currencyBalance =
+                                        (authData.balanceData && authData.balanceData.length > 0) ?
+                                            authData.balanceData.find((data) => data.coinType === currency.name && data.type === currency.token)
+                                            : { balance: 0 };
+
                                     // let currencyBalance = (authData.balanceData && authData.balanceData.length > 0) ? authData.balanceData.find((data) => data.coinType === currency.name) : { balance: 0 };
 
                                     return (
                                         <MenuItem key={index} value={JSON.stringify({ coinType: currency.name, type: currencyBalance.type })} className={classes.CustomMenuItem}>
                                             <img className={classes.CurrencyIcon} src={`/assets/images/coins/${currency.name.toLowerCase()}.png`} alt='icon' />
                                             <span className={classes.CoinAmountSpan}>
-                                                {
-                                                    currencyBalance.balance.toFixed(currency.decimal)
-                                                }
+                                                {Number(currencyBalance.balance).toFixed(currency.decimal)}
                                             </span>
+
                                             <Box className={classes.CoinTypeBox}>{(currency.token === 'native' || currency.token === '') ? currency.name : `${currency.name}(${currency.token})`}</Box>
                                         </MenuItem>
                                     )
@@ -629,14 +631,14 @@ const MainHeader = () => {
                 }
                 {
                     userSetting &&
-                    <Box  className={classes.UserSettingBox} ref={userSettingRef}>
+                    <Box className={classes.UserSettingBox} ref={userSettingRef}>
                         <UserSetting setUserSetting={setUserSetting} />
                     </Box>
                 }
             </Box>
-            
-            
-            
+
+
+
             <AuthenticationModal open={authModalOpen} setOpen={setAuthModalOpen} authType={authType} />
             <WalletModal open={walletModalOpen} setOpen={setWalletModalOpen} />
             <SignoutModal open={signoutModalOpen} setOpen={setSignoutModalOpen} />

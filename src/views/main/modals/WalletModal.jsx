@@ -11,7 +11,8 @@ import { getMyBalances } from "redux/actions/auth";
 import { LoadingContext } from "layout/Context/loading";
 import SwapContainer from "views/components/swap";
 import HistoryContainer from "views/components/history";
-import { configPlayAmount, configWithdraw } from "config/config_play_amount";
+import { configPlayAmount, configWithdraw, precisionByCurrency } from "config/config_play_amount";
+import { cryptoAddressValidator } from "config/validate_crypto_adress";
 
 const useStyles = makeStyles(() => ({
     ModalMain: {
@@ -372,6 +373,8 @@ const WalletModal = ({ open, setOpen }) => {
         // eslint-disable-next-line
     }, [open, pageType, depositCurrencyType, withdrawCurrencyType]);
 
+
+
     const loadDepositAddress = async () => {
 
         if (open) {
@@ -421,57 +424,119 @@ const WalletModal = ({ open, setOpen }) => {
 
 
 
+
+    // ------------------------------------------------- bouton pour le retrait
     const handleWithdraw = async () => {
+
         try {
-            // Prepare the withdrawal request payload
+            const currency = currencies[withdrawCurrencyType];
+            const currencyKey = currency?.name?.toLowerCase();
+            const availableAmount = Number(balanceData[withdrawCurrencyType]?.balance) || 0;
+            const withdrawalAmount = parseFloat(withdrawAmount);
+            const minWithdrawal = configWithDraw.min || 0;
+            const maxWithdrawal = configWithDraw.max || Infinity; // Récupération du max
+
+            // Validation de l'adresse
+            if (!withdrawAddress?.trim()) {
+                addToast('Please enter a valid withdrawal address', {
+                    appearance: 'warning',
+                    autoDismiss: true
+                });
+                return;
+            }
+
+            if (!cryptoAddressValidator(currencyKey, withdrawAddress)) {
+                addToast(`Invalid ${currency.name.toUpperCase()} address format`, {
+                    appearance: 'warning',
+                    autoDismiss: true
+                });
+                return;
+            }
+
+            // Validation du solde
+            if (availableAmount <= 0) {
+                addToast('Insufficient balance for withdrawal', {
+                    appearance: 'warning',
+                    autoDismiss: true
+                });
+                return;
+            }
+
+            // Validation montant minimum
+            if (withdrawalAmount < minWithdrawal) {
+                addToast(`Minimum withdrawal: ${minWithdrawal.toFixed(precisionByCurrency[currencyKey])} ${currency.name.toUpperCase()}`,
+                    { appearance: 'warning', autoDismiss: true });
+                return;
+            }
+
+            // Nouvelle validation du montant maximum
+            if (withdrawalAmount > maxWithdrawal) {
+                addToast(`Maximum withdrawal: ${maxWithdrawal.toFixed(precisionByCurrency[currencyKey])} ${currency.name.toUpperCase()}`,
+                    { appearance: 'warning', autoDismiss: true });
+                return;
+            }
+
+            // Vérification solde suffisant
+            if (withdrawalAmount > availableAmount) {
+                addToast(`Insufficient balance for withdrawal`, {
+                    appearance: 'warning',
+                    autoDismiss: true
+                });
+                return;
+            }
+
+            // Envoi de la requête
             const request = {
-                coinType: currencies[withdrawCurrencyType]?.name,
-                amount: parseFloat(withdrawAmount),
+                coinType: currency.name,
+                amount: withdrawalAmount,
                 address: withdrawAddress,
                 userId: userData?._id,
             };
 
-
-            // Validate required fields before sending the request
-            if (!request.coinType || isNaN(request.amount) || !request.address) {
-                addToast("Please fill all fields correctly.", { appearance: 'error', autoDismiss: true });
-                return;
-            }
-
-            // Send the withdrawal request
             const response = await withdraw(request);
-            console.log("Response received:", JSON.stringify(response));
+            console.log(`reponse = ${JSON.stringify(response)}`);
 
-            // Handle response and show appropriate toast
-            // if (response?.status) {
-            //     addToast("Withdrawal successfully completed.", { appearance: 'success', autoDismiss: true });
-            // } else {
-            //     const errorMessage = response?.message || "An unexpected error occurred. Please try again.";
-            //     addToast(errorMessage, { appearance: 'error', autoDismiss: true });
-            // }
 
-            if (response?.data) {
-                if (response.data.error) {
-                    const errorMessage = response.data.error || "An unexpected error occurred. Please try again.";
-                    addToast(errorMessage, { appearance: 'error', autoDismiss: true });
-                }
-                else {
-                    addToast(
-                        `The amount of ${request.amount} ${request.coinType.toUpperCase()} will be sent to ${request.address} after blockchain confirmation.`,
-                        { appearance: 'success', autoDismiss: true });
-                }
+            if (response?.status) {
+                addToast(`Withdrawal of ${withdrawalAmount.toFixed(precisionByCurrency[currencyKey])} ${currency.name.toUpperCase()} initiated successfully`, {
+                    appearance: 'success',
+                    autoDismiss: true
+                });
+
+
+                // 1. Reset du formulaire
+                setWithdrawAmount(0);
+                setWithdrawAddress('');
+
+                setPageType(0); // remettre a la page 0
+
+                // 2. Fermeture de la modal
+                handleClose();
+
+
             } else {
-                addToast(
-                    `The amount of ${request.amount} ${request.coinType.toUpperCase()} will be sent to ${request.address} after blockchain confirmation.`,
-                    { appearance: 'success', autoDismiss: true });
+                const errorMsg = 'Withdrawal processing failed';
+                addToast(errorMsg, { appearance: 'error', autoDismiss: true });
             }
+
         } catch (error) {
-            console.error("Error during withdrawal:", error);
-            addToast("Failed to process the withdrawal. Please check your connection and try again.", {
-                appearance: 'error',
-                autoDismiss: true,
-            });
+            // Vérifier si l'erreur a une réponse avec un message d'erreur personnalisé
+            if (error.response && error.response.data && error.response.data.error) {
+                // Afficher le message d'erreur du backend dans le toast
+                addToast(error.response.data.error, {
+                    appearance: 'error',
+                    autoDismiss: true,
+                });
+            } else {
+                // Message générique d'erreur en cas d'absence de message spécifique
+                addToast("An unexpected error occurred. Please try again.", {
+                    appearance: 'error',
+                    autoDismiss: true,
+                });
+            }
         }
+
+
     };
 
 
@@ -486,7 +551,6 @@ const WalletModal = ({ open, setOpen }) => {
 
 
 
-    const [configWithDraw, setConfigWithDraw] = useState(configWithdraw.btc);
 
     useEffect(() => {
 
@@ -506,12 +570,45 @@ const WalletModal = ({ open, setOpen }) => {
         }
 
 
+        // trx
+        else if (withdrawCurrencyType === 3) {
+            setConfigWithDraw(configWithdraw.bnb)
+        }
+
+
     }, [withdrawCurrencyType])
 
 
+    const setMaxAmount = () => {
+        const currency = currencies[withdrawCurrencyType];
+        if (!currency) return;
+
+        // Récupération du solde disponible et des frais
+        const availableBalance = Number(balanceData[withdrawCurrencyType]?.balance) || 0;
+        const withdrawalFee = configWithDraw.fee || 0;
+
+        // Calcul du montant maximum retirable (solde - frais)
+        const maxAmount = Math.max(availableBalance - withdrawalFee, 0);
+
+        // Formatage selon les décimales de la crypto
+        const formattedAmount = maxAmount.toFixed(currency.decimal);
+
+        setWithdrawAmount(formattedAmount);
+    };
 
 
 
+    useEffect(() => {
+        const currencyName = currencies[withdrawCurrencyType]?.name?.toLowerCase();
+        if (currencyName && configWithdraw[currencyName]) {
+            setConfigWithDraw(configWithdraw[currencyName]);
+        }
+    }, [withdrawCurrencyType, currencies]);
+
+    const [configWithDraw, setConfigWithDraw] = useState(() => {
+        const initialCurrency = currencies[0]?.name?.toLowerCase();
+        return configWithdraw[initialCurrency] || configWithdraw.bnb;
+    });
 
 
     return (
@@ -665,7 +762,7 @@ const WalletModal = ({ open, setOpen }) => {
                                             <input className={classes.AmountInput} value={withdrawAmount} onChange={handleWithdrawAmount} />
                                             <Box className={classes.AmountInputUtils}>
                                                 <img className={classes.CurrencyIcon} src={`/assets/images/coins/${currencies[withdrawCurrencyType].name.toLowerCase()}.png`} alt="icon" />
-                                                <span className={classes.AmountMaxButton}>Max</span>
+                                                <span className={classes.AmountMaxButton} onClick={setMaxAmount}>Max</span>
                                             </Box>
                                         </Box>
                                     </Box>
@@ -676,17 +773,27 @@ const WalletModal = ({ open, setOpen }) => {
                                     <Box className={classes.CurrencyBlockRow}>
                                         <span>Minimum</span>
                                         <Box className={classes.CurrencyDetail}>
-                                            <img className={classes.CurrencyIcon} src={`/assets/images/coins/${currencies[withdrawCurrencyType].name.toLowerCase()}.png`} alt="icon" />
-                                            {/* 0.00010000 */}
-
-                                            {configWithDraw.min}
+                                            <img className={classes.CurrencyIcon}
+                                                src={`/assets/images/coins/${currencies[withdrawCurrencyType].name.toLowerCase()}.png`}
+                                                alt="icon" />
+                                            {configWithDraw.min.toFixed(precisionByCurrency[currencies[withdrawCurrencyType].name.toLowerCase()])}
                                         </Box>
                                     </Box>
                                     <Box className={classes.CurrencyBlockRow}>
-                                        <span>Fee</span>
+                                        <span>Maximum</span>
                                         <Box className={classes.CurrencyDetail}>
-                                            <img className={classes.CurrencyIcon} src={`/assets/images/coins/${currencies[withdrawCurrencyType].name.toLowerCase()}.png`} alt="icon" />
-                                            {configWithDraw.fee}
+                                            <img className={classes.CurrencyIcon}
+                                                src={`/assets/images/coins/${currencies[withdrawCurrencyType].name.toLowerCase()}.png`}
+                                                alt="icon" />
+                                            {configWithDraw.max.toFixed(precisionByCurrency[currencies[withdrawCurrencyType].name.toLowerCase()])}
+                                        </Box>
+                                    </Box>
+                                    <Box className={classes.CurrencyBlockRow}>
+                                        <span>Fees</span>
+                                        <Box className={classes.CurrencyDetail}>
+                                            <span style={{ fontSize: '12px' }}>
+                                                Withdrawal fees up to 0.5% will be applied
+                                            </span>
                                         </Box>
                                     </Box>
                                 </Box>
