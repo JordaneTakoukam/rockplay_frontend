@@ -11,7 +11,7 @@ import { getMyBalances } from "redux/actions/auth";
 import { LoadingContext } from "layout/Context/loading";
 import SwapContainer from "views/components/swap";
 import HistoryContainer from "views/components/history";
-import { configPlayAmount, configWithdraw, precisionByCurrency } from "config/config_play_amount";
+import { configPlayAmount, configWithdraw as configWithdrawImport, precisionByCurrency } from "config/config_play_amount";
 import { cryptoAddressValidator } from "config/validate_crypto_adress";
 
 const useStyles = makeStyles(() => ({
@@ -556,23 +556,23 @@ const WalletModal = ({ open, setOpen }) => {
 
         // btc
         if (withdrawCurrencyType === 0) {
-            setConfigWithDraw(configWithdraw.btc)
+            setConfigWithDraw(configWithdrawImport.btc)
         }
 
         // eth
         else if (withdrawCurrencyType === 1) {
-            setConfigWithDraw(configWithdraw.eth)
+            setConfigWithDraw(configWithdrawImport.eth)
         }
 
         // trx
         else if (withdrawCurrencyType === 2) {
-            setConfigWithDraw(configWithdraw.trx)
+            setConfigWithDraw(configWithdrawImport.trx)
         }
 
 
         // trx
         else if (withdrawCurrencyType === 3) {
-            setConfigWithDraw(configWithdraw.bnb)
+            setConfigWithDraw(configWithdrawImport.bnb)
         }
 
 
@@ -600,14 +600,14 @@ const WalletModal = ({ open, setOpen }) => {
 
     useEffect(() => {
         const currencyName = currencies[withdrawCurrencyType]?.name?.toLowerCase();
-        if (currencyName && configWithdraw[currencyName]) {
-            setConfigWithDraw(configWithdraw[currencyName]);
+        if (currencyName && configWithdrawImport[currencyName]) {
+            setConfigWithDraw(configWithdrawImport[currencyName]);
         }
     }, [withdrawCurrencyType, currencies]);
 
     const [configWithDraw, setConfigWithDraw] = useState(() => {
         const initialCurrency = currencies[0]?.name?.toLowerCase();
-        return configWithdraw[initialCurrency] || configWithdraw.bnb;
+        return configWithdrawImport[initialCurrency] || configWithdrawImport.bnb;
     });
 
 
@@ -682,7 +682,7 @@ const WalletModal = ({ open, setOpen }) => {
                             </Box>
                             <Box className={classes.CurrencyBlock}>
                                 <Box className={classes.CurrencyTitle}>Deposit Address</Box>
-                                <Box className={classes.DepositBalanceBlock}>
+                                <Box className={classes.DepositBalanceBlock} style={{ paddingBottom: "5px" }}>
                                     <span className={classes.DepositBalanceTitle}>
                                         Address
                                     </span>
@@ -696,6 +696,38 @@ const WalletModal = ({ open, setOpen }) => {
                                         </Box>
                                     </Box>
                                 </Box>
+
+                                {
+                                    currencies[depositCurrencyType]?.withdrawable &&
+                                    configWithdrawImport[currencies[depositCurrencyType].name.toLowerCase()]?.minDeposit && (
+                                        <Box className={classes.CurrencyBlock} style={{ marginTop: "20px" }}>
+                                            <Box
+                                                className={classes.DepositBalanceBlock}
+                                                style={{ paddingTop: "5px", paddingBottom: "5px" }}
+                                            >
+                                                <Box className={classes.CurrencyBlockRow}>
+                                                    <span>Minimum</span>
+                                                    <Box className={classes.CurrencyDetail}>
+                                                        <img
+                                                            className={classes.CurrencyIcon}
+                                                            src={`/assets/images/coins/${currencies[depositCurrencyType].name.toLowerCase()}.png`}
+                                                            alt="icon"
+                                                        />
+                                                        {configWithdrawImport[currencies[depositCurrencyType].name.toLowerCase()].minDeposit}
+                                                    </Box>
+                                                </Box>
+                                                <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+                                                    <span>Fees</span>
+                                                    <Box sx={{ fontSize: '12px' }}>
+                                                        A Fee up to {configWithdrawImport.withdraw_fee}% will be applied
+                                                    </Box>
+                                                </Box>
+
+                                            </Box>
+                                        </Box>
+                                    )
+                                }
+
                             </Box>
                         </Box>
                     }
@@ -792,7 +824,7 @@ const WalletModal = ({ open, setOpen }) => {
                                         <span>Fees</span>
                                         <Box className={classes.CurrencyDetail}>
                                             <span style={{ fontSize: '12px' }}>
-                                                Withdrawal fees up to 0.5% will be applied
+                                                Withdrawal fees up to {configWithdrawImport.withdraw_fee}% will be applied
                                             </span>
                                         </Box>
                                     </Box>

@@ -118,6 +118,7 @@ const HistoryContainer = () => {
             withdraw_request: transaction.withdraw_request ?? "-",
             type_transaction: transaction.type_transaction || "-",
             date: transaction.createdAt || "-",
+            uuid: transaction.uuid || "-",
           });
         }
       });
@@ -145,9 +146,9 @@ const HistoryContainer = () => {
         };
       } else {
         return {
-          label: "Withdrawal confirmed",
-          icon: <ArrowUpward style={{ color: "#f44336" }} />,
-          color: "#f44336",
+          label: "Withdrawal Approuved",
+          icon: <ArrowUpward style={{ color: "#4caf50" }} />,
+          color: "#4caf50",
           isDeposit: false,
         };
       }
@@ -222,10 +223,17 @@ const HistoryContainer = () => {
                       {item.amount?.toFixed(item.currency?.decimal)} {item.currency?.name}
                     </Typography>
                     <Typography className={classes.TxId}>
-                      ID:{' '}
-                      {item.txId && item.txId.trim() !== ''
+                      {item.type_transaction === "withdraw" ?
+                        item.withdraw_request === 1 ? "Pending approval" :
+
+                          `REQ_ID: ` : `TR_ID: `
+
+                      }
+                      {item.withdraw_request === 1 ? "" : item.txId && item.txId.trim() !== ''
                         ? `${item.txId.slice(0, 12)}...${item.txId.slice(-8)}`
-                        : '-'}
+                        : item.uuid !== '' ?
+                          `${item.uuid.slice(0, 10).toString()}...${item.uuid.slice(-8).toString()}` :
+                          '-'}
                     </Typography>
 
                   </Box>

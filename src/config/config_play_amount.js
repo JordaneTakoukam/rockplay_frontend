@@ -13,7 +13,7 @@ const max = 500; // $ (montant maximal en USD)
 const precisionByCurrency = {
     bnb: 5,
 
-    
+
     btc: 7,
     eth: 6,
     trx: 3,
@@ -65,57 +65,69 @@ const roundToCurrencyPrecision = (amount, currency, maxPrecision = null) => {
     return parseFloat(amount.toFixed(precision));
 };
 
-// Configuration des retraits par devise
-// const configWithdraw = {
-//     btc: {
-//         fee: 0.00005, // ~ 4.82$
-//         min: 0.0001,  // ~ 48.24$
-//         max: 0.05     // ~ 4,823.59$
-//     },
-//     eth: {
-//         fee: 0.003,   // ~ 10.31$
-//         min: 0.03,    // ~ 103.10$
-//         max: 1.5      // ~ 5,154.87$
-//     },
-//     trx: {
-//         fee: 1.89,    // ~ 0.5$
-//         min: 37.79,   // ~ 10$
-//         max: 20000    // ~ 5258.05$
-//     },
-//     sol: {
-//         fee: 0.0005,  // ~ 0.11$
-//         min: 0.005,   // ~ 1.075$
-//         max: 200      // ~ 43,000$
-//     },
-// };
+
 
 const configWithdraw = {
-    btc: {
-        // fee: 0.000003, // from blockbee
-        fee: 0.000004, // from blockbee
-        min: 0.00008, // minimum blockbee
-        max: 0.00485  // ~ 4,823.59$
-    },
-    eth: {
-        // fee: 0.00023, // from blockbee ~ 0.61
-        fee: 0.00025, // from blockbee ~ 0.61
-        min: 0.0045, // from blockbee
-        max: 0.15, // ~ 5,154.87$
-    },
-    trx: {
-        // fee: 3,  // from blockbee ~ 0.29$
-        fee: 4,  // from blockbee ~ 0.29$
-        min: 10, // from blockbee
-        max: 2025 // ~500$
+    withdraw_fee: 1, // en pourcentage
 
+    // Blockbee min = 0.00008 BTC (~7.58 $)
+    btc: {
+        minDeposit: 0.00011, // ~10.41 $
+        min: 0.00032,        // ~30.29 $
+        max: 0.0032,         // ~302.94 $
+        precision: 7
     },
+
+    // Blockbee min = 0.0045 ETH (~8.18 $)
+    eth: {
+        minDeposit: 0.0055,  // ~10.01 $
+        min: 0.07,           // ~127.20 $
+        max: 0.17,           // ~308.92 $
+        precision: 4
+    },
+
+    // Blockbee min = 10 TRX (~2.50 $)
+    trx: {
+        minDeposit: 12,      // ~3.00 $
+        min: 20,             // ~5.00 $
+        max: 1200,           // ~300.00 $
+        precision: 2
+    },
+
+    // Blockbee min = 0.001 BNB (~0.59 $)
     bnb: {
-        // fee: 0.000084, // ~ 0.053$
-        fee: 0.000085, // ~ 0.053$
-        min: 0.002,
-        max: 0.5 // ~ 500$
+        minDeposit: 0.002,   // ~1.18 $
+        min: 0.01,           // ~5.91 $
+        max: 0.51,           // ~301.67 $
+        precision: 4
     },
+
+    // Blockbee min = 0.0005 BCH (~0.18 $)
+    bch: {
+        minDeposit: 0.001,   // ~0.36 $
+        min: 0.05,           // ~18.03 $
+        max: 0.8,            // ~288.45 $
+        precision: 4
+    },
+
+    // Blockbee min = 0.002 LTC (~0.18 $)
+    ltc: {
+        minDeposit: 0.003,   // ~0.26 $
+        min: 0.3,            // ~26.31 $
+        max: 3.5,            // ~307.96 $
+        precision: 4
+    },
+
+    // Blockbee min = 10 DOGE (~1.73 $)
+    doge: {
+        minDeposit: 12,      // ~2.08 $
+        min: 150,            // ~25.96 $
+        max: 1800,           // ~311.52 $
+        precision: 2
+    }
 };
+
+
 
 // Export des configurations et de la fonction d'arrondi
 export { configPlayAmount, roundToCurrencyPrecision, configWithdraw, precisionByCurrency };
