@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import HelpTree from "../../HelpTree";
+import emailConfig from "config/email_config";
 
 const useStyles = makeStyles(() => ({
     MainLayout: {
@@ -75,12 +76,12 @@ const SupportedNetworks = () => {
     const classes = useStyles();
 
     const helpTreeData = [
-        { to: '/app/help', label: 'MinusPlay Support' },
+        { to: '/app/help', label: `${emailConfig.appName} Support` },
         { to: '/app/help/wallet', label: 'Wallet' }
     ];
 
     const data = [
-        'Go to your MinusPlay Wallet.',
+        `Go to your ${emailConfig.appName} Wallet.`,
         'Chose the Deposit option on the transaction menu.',
         'Select Bitcoin in the Deposit to fold out menu.',
         'Scan the QR or paste the Bitcoin address from your Cash App account'

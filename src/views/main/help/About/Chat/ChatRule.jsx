@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import HelpTree from "../../HelpTree";
+import emailConfig from "config/email_config";
 
 const useStyles = makeStyles(() => ({
     MainLayout: {
@@ -75,7 +76,7 @@ const ChatRule = () => {
     const classes = useStyles();
 
     const helpTreeData = [
-        { to: '/app/help', label: 'MinusPlay Support' },
+        { to: '/app/help', label: `${emailConfig.appName} Support` },
         { to: '/app/help/about', label: 'About' }
     ];
 
@@ -98,7 +99,7 @@ const ChatRule = () => {
             </Box>
             <Box className={classes.DetailBox}>
                 <Typography className={classes.PageTitle}>WHAT ARE THE CHAT RULES?</Typography>
-                <Typography className={classes.PageGroupTitle}>MinusPlay community is friendly and respectful so whenever you talk in our chat remember to respect the following guidelines:</Typography>
+                <Typography className={classes.PageGroupTitle}>{emailConfig.appName} community is friendly and respectful so whenever you talk in our chat remember to respect the following guidelines:</Typography>
                 <Box className={classes.DataTextBox}>
                     {
                         data.map((item, index) => (
@@ -110,7 +111,7 @@ const ChatRule = () => {
                     }
                 </Box>
                 <Box className={classes.WarningBox}>
-                    Remember to download your back-up code and keep it in a safe place. If you lose your phone or delete your authentication app, you can use your backup code to enter MinusPlay. Keep in mind that each backup code can only be used once.
+                    Remember to download your back-up code and keep it in a safe place. If you lose your phone or delete your authentication app, you can use your backup code to enter {emailConfig.appName}. Keep in mind that each backup code can only be used once.
                 </Box>
             </Box>
         </Box>

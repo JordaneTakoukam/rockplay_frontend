@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import HelpTree from "../../HelpTree";
+import emailConfig from "config/email_config";
 
 const useStyles = makeStyles(() => ({
     MainLayout: {
@@ -75,7 +76,7 @@ const HowToSetupHelp = () => {
     const classes = useStyles();
 
     const helpTreeData = [
-        { to: '/app/help', label: 'MinusPlay Support' },
+        { to: '/app/help', label: `${emailConfig.appName} Support` },
         { to: '/app/help/security', label: 'Security' }
     ];
 
@@ -106,9 +107,9 @@ const HowToSetupHelp = () => {
                         ))
                     }
                 </Box>
-                <Typography className={classes.PageGroupTitle}>MinusPlay supports FIDO2 authentication, so Yubikey, Trezor, Ledger, all Android 7.0 or higher biometrics, Chrome OS, and iOS14 devices can function as a security key. So can macOS with biometric sensors and PCs with Windows 10 that have Windows Hello set up.</Typography>
+                <Typography className={classes.PageGroupTitle}>{emailConfig.appName} supports FIDO2 authentication, so Yubikey, Trezor, Ledger, all Android 7.0 or higher biometrics, Chrome OS, and iOS14 devices can function as a security key. So can macOS with biometric sensors and PCs with Windows 10 that have Windows Hello set up.</Typography>
                 <Box className={classes.WarningBox}>
-                    Remember to download your back-up code and keep it in a safe place. If you lose your phone or delete your authentication app, you can use your backup code to enter MinusPlay. Keep in mind that each backup code can only be used once.
+                    Remember to download your back-up code and keep it in a safe place. If you lose your phone or delete your authentication app, you can use your backup code to enter {emailConfig.appName}. Keep in mind that each backup code can only be used once.
                 </Box>
             </Box>
         </Box>

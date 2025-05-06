@@ -1,3 +1,4 @@
+import emailConfig from "./email_config";
 
 
 const isLocal = process.env.REACT_APP_MODE === 'dev' ? true : false;
@@ -26,7 +27,7 @@ const Config = {
         crashSocketUrl: isLocal ? 'http://localhost:5700' : 'https://crash-services.rockplay.fun'
     },
     // token: 'PlayZelo',
-    token: 'MinusPlay',
+    token: emailConfig.appName,
     request: {
         getAuthData: '/auth/getAuthData',
         userGoogleLogin: '/auth/google-login',

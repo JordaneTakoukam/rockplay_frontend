@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import HelpTree from "../../HelpTree";
+import emailConfig from "config/email_config";
 
 const useStyles = makeStyles(() => ({
     MainLayout: {
@@ -75,14 +76,14 @@ const SupportedNetworks = () => {
     const classes = useStyles();
 
     const helpTreeData = [
-        { to: '/app/help', label: 'MinusPlay Support' },
+        { to: '/app/help', label: `${emailConfig.appName} Support` },
         { to: '/app/help/wallet', label: 'Wallet' }
     ];
 
     const data = [
         'Click on the Wallet button to open your wallet.',
         'Select the Deposit option.',
-        'Choose Bitcoin, MinusPlay Dollar (ZELO) in the Deposit to tab.',
+        `Choose Bitcoin, ${emailConfig.appName} Dollar (ZELO) in the Deposit to tab.`,
         'Click on the QR scanner on the right side of the address bar.',
         'Point your camera to the Lightning Invoice QR code.',
         'Select the amount you want to deposit.',

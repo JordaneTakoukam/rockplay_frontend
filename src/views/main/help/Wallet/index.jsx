@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import HelpTree from "../HelpTree";
 import SubCategory from "../SubCategory";
+import emailConfig from "config/email_config";
 
 const useStyles = makeStyles(() => ({
     MainLayout: {
@@ -29,7 +30,7 @@ const HelpWalletBox = () => {
     const classes = useStyles();
 
     const helpTreeData = [
-        { to: '/app/help', label: 'MinusPlay Support' },
+        { to: '/app/help', label: `${emailConfig.appName} Support` },
         { to: '/app/help/wallet', label: 'Wallet' }
     ];
 
@@ -50,7 +51,7 @@ const HelpWalletBox = () => {
         {
             title: 'WITHDRAWALS',
             data: [
-                { text: 'How to withdraw MINUSPLAY Dollar', link: '/app/help/wallet/withdrawals/how-to-withdraw-playzelo-dollar' },
+                { text: `How to withdraw ${emailConfig.appName} Dollar`, link: '/app/help/wallet/withdrawals/how-to-withdraw-playzelo-dollar' },
                 { text: 'How to make a withdrawal', link: '/app/help/wallet/withdrawals/how-to-withdrawal' },
             ]
         }

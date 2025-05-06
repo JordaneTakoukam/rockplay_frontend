@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import HelpTree from "../../HelpTree";
+import emailConfig from "config/email_config";
 
 const useStyles = makeStyles(() => ({
     MainLayout: {
@@ -75,7 +76,7 @@ const HowToExclude = () => {
     const classes = useStyles();
 
     const helpTreeData = [
-        { to: '/app/help', label: 'MinusPlay Support' },
+        { to: '/app/help', label: `${emailConfig.appName} Support` },
         { to: '/app/help/about', label: 'About' }
     ];
 
@@ -90,7 +91,7 @@ const HowToExclude = () => {
                 <Typography className={classes.PageGroupTitle}>Once you click on Cool Off, you won’t be able to bet for 24hrs.</Typography>
                 <Typography className={classes.PageGroupTitle}>After the first 24hrs pass, you can extend the self-exclusion period if you wish to. You will be able to withdraw money while you are self-excluded for 24hrs, a week, or a month but not if you choose to be excluded permanently.</Typography>
                 <Typography className={classes.PageGroupTitle}>Please make sure you want to be excluded from the game for the period you select.</Typography>
-                <Typography className={classes.PageGroupTitle}>If you are permanently self-excluded from the game and forgot to withdraw your funds, contact support@minusplay.com for help.</Typography>
+                <Typography className={classes.PageGroupTitle}>If you are permanently self-excluded from the game and forgot to withdraw your funds, contact {emailConfig.contactEmail} for help.</Typography>
             </Box>
         </Box>
     );

@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import HelpTree from "../../HelpTree";
+import emailConfig from "config/email_config";
 
 const useStyles = makeStyles(() => ({
     MainLayout: {
@@ -76,7 +77,7 @@ const WhatisFair = () => {
     const classes = useStyles();
 
     const helpTreeData = [
-        { to: '/app/help', label: 'MinusPlay Support' },
+        { to: '/app/help', label: `${emailConfig.appName} Support` },
         { to: '/app/help/about', label: 'About' }
     ];
 
@@ -88,7 +89,7 @@ const WhatisFair = () => {
             <Box className={classes.DetailBox}>
                 <Typography className={classes.PageTitle}>WHAT IS PROVABLY FAIR?</Typography>
                 <Typography className={classes.PageGroupTitle}>When a game is provably fair, it means that it provides a transparent way for the player to verify that the site generates the result of every play randomly.</Typography>
-                <Typography className={classes.PageGroupTitle}>At MinusPlay, all of the games are entirely provably fair, which makes PlayZelo the only 100% provably fair iGaming platform in the market.</Typography>
+                <Typography className={classes.PageGroupTitle}>At {emailConfig.appName}, all of the games are entirely provably fair, which makes PlayZelo the only 100% provably fair iGaming platform in the market.</Typography>
                 <Typography className={classes.PageGroupTitle}>The outcome of every play comes from combining a hashed Server Seed, provided by PlayZelo, and a Client Seed given by the browser in which you are playing.</Typography>
                 <Typography className={classes.PageGroupTitle}>The combination of the Client Seed and the Server Seed generates random outcomes for every play.</Typography>
                 <Typography className={classes.PageGroupTitle}>We use an algorithm that produces a Server Seed beforehand and keeps them in a hash that can be verified by the user after the play ends.</Typography>

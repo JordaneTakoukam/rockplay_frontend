@@ -1,16 +1,31 @@
+import emailConfig from "./email_config";
+
+
 export const COINTYPES = {
-    BTC: { code: 'BTC', fullname: 'Bitcoin', token: '', decimal: 8 },
-    ETH: { code: 'ETH', fullname: 'Ethereum', token: 'erc20', decimal: 6 },
-    TRX: { code: 'TRX', fullname: 'TRON', token: 'trc20', decimal: 6 },
-    MUP: { code: 'MUP', fullname: 'MinusPlay', token: 'erc20', decimal: 4 }
+    BNB: { code: 'BNB', fullname: 'Binance Coin', token: 'bep20', decimal: 7, chain: 'BNB' },
+    BTC: { code: 'BTC', fullname: 'Bitcoin', token: '', decimal: 5, chain: 'BTC' },
+    BTC_LN: { code: 'BTC', fullname: 'Bitcoin Lightning', token: 'lightning', decimal: 5, chain: 'BTC' },
+    BCH: { code: 'BCH', fullname: 'Bitcoin Cash', token: '', decimal: 5, chain: 'BCH' },
+    LTC: { code: 'LTC', fullname: 'Litecoin', token: '', decimal: 5, chain: 'LTC' },
+    DOGE: { code: 'DOGE', fullname: 'Dogecoin', token: 'native', decimal: 5, chain: 'DOGE' },
+    ETH: { code: 'ETH', fullname: 'Ethereum', token: 'erc20', decimal: 5, chain: 'ETH' },
+    TRX: { code: 'TRX', fullname: 'TRON', token: 'trc20', decimal: 5, chain: 'TRON' },
+    SOL: { code: 'SOL', fullname: 'Solana', token: '', decimal: 5, chain: 'SOL' },
+    RP: { code: 'RP', fullname: `${emailConfig.appName}`, token: 'erc20', decimal: 2, chain: 'ETH' }
 };
 
+
 export const CURRENCIES = {
+    BNB: 'BNB',
     BTC: 'BTC',
+    BCH: 'BCH',
+    LTC: 'LTC',
+    DOGE: 'DOGE',
     ETH: 'ETH',
     TRX: 'TRX',
-    MUP: 'MUP'
-}
+    SOL: 'SOL',
+    RP: 'RP'
+};
 
 export const BLACKJACK_CARD_RESULT = {
     NONE: 0,

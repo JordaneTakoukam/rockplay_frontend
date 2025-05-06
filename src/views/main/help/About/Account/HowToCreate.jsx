@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import HelpTree from "../../HelpTree";
+import emailConfig from "config/email_config";
 
 const useStyles = makeStyles(() => ({
     MainLayout: {
@@ -75,12 +76,12 @@ const HowToCreate = () => {
     const classes = useStyles();
 
     const helpTreeData = [
-        { to: '/app/help', label: 'Minusplay Support' },
+        { to: '/app/help', label: `${emailConfig.appName} Support` },
         { to: '/app/help/about', label: 'About' }
     ];
 
     const data = [
-        'Go to minusplay.com and click on Register in the top right corner of the screen.',
+        `Go to ${emailConfig.websiteLink} and click on Register in the top right corner of the screen.`,
         'Enter your email address.',
         'Go to your email inbox and copy the six-digit code we sent you.',
         'Enter the sign-in code and click on Next, and that is it. You are ready to choose your username and play.'
@@ -93,7 +94,7 @@ const HowToCreate = () => {
             </Box>
             <Box className={classes.DetailBox}>
                 <Typography className={classes.PageTitle}>HOW TO CREATE YOUR ACCOUNT</Typography>
-                <Typography className={classes.PageGroupTitle}>Creating your minusplay account is super easy. Just follow these few steps:</Typography>
+                <Typography className={classes.PageGroupTitle}>Creating your {emailConfig.appName} account is super easy. Just follow these few steps:</Typography>
                 <Box className={classes.DataTextBox}>
                     {
                         data.map((item, index) => (
@@ -104,7 +105,7 @@ const HowToCreate = () => {
                         ))
                     }
                 </Box>
-                <Typography className={classes.PageGroupTitle}>If you don’t want to log in with a minusplay account, you can sign in using your Google, Apple, or supported Web3 wallets.</Typography>
+                <Typography className={classes.PageGroupTitle}>If you don’t want to log in with a {emailConfig.appName} account, you can sign in using your Google, Apple, or supported Web3 wallets.</Typography>
                 <Typography className={classes.PageGroupTitle}>We recommend enabling a two-factor authentication method (2FA) after creating your account to ensure the safety of your deposit.</Typography>
             </Box>
         </Box>

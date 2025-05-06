@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import HelpTree from "../../HelpTree";
+import emailConfig from "config/email_config";
 
 const useStyles = makeStyles(() => ({
     MainLayout: {
@@ -75,7 +76,7 @@ const HowToWithdraw = () => {
     const classes = useStyles();
 
     const helpTreeData = [
-        { to: '/app/help', label: 'MinusPlay Support' },
+        { to: '/app/help', label: `${emailConfig.appName} Support` },
         { to: '/app/help/wallet', label: 'Wallet' }
     ];
 
@@ -96,7 +97,7 @@ const HowToWithdraw = () => {
                 <HelpTree data={helpTreeData} />
             </Box>
             <Box className={classes.DetailBox}>
-                <Typography className={classes.PageTitle}>HOW TO WITHDRAW MINUSPLAY DOLLAR</Typography>
+                <Typography className={classes.PageTitle}>HOW TO WITHDRAW {emailConfig.appName.toUpperCase()} DOLLAR</Typography>
                 <Typography className={classes.PageGroupTitle}>To make a withdrawal, you need to unfold the menu on the top right corner of the homepage and click on Wallet. Next, follow these simple steps:</Typography>
                 <Box className={classes.DataTextBox}>
                     {

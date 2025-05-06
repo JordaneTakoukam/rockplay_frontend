@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import emailConfig from "config/email_config";
 
 const useStyles = makeStyles(() => ({
     MainLayout: {
@@ -80,7 +81,7 @@ const TermsOfService = () => {
     const data = [
         {
             title: 'Acceptance of Terms',
-            description: 'By creating an account at MinusPlay.com, you agree to these Terms and confirm that you are over 18 years old (or the legal age in your jurisdiction).'
+            description: `By creating an account at ${emailConfig.websiteLink}, you agree to these Terms and confirm that you are over 18 years old (or the legal age in your jurisdiction).`
         },
         {
             title: 'Account Registration',
@@ -92,11 +93,11 @@ const TermsOfService = () => {
         },
         {
             title: 'Bonuses and Promotions',
-            description: 'All bonuses and promotions are subject to specific terms described on the promotion pages. MinusPlay.com reserves the right to modify or withdraw bonuses and promotions without prior notice.'
+            description: `All bonuses and promotions are subject to specific terms described on the promotion pages. ${emailConfig.websiteLink} reserves the right to modify or withdraw bonuses and promotions without prior notice.`
         },
         {
             title: 'Deposits and Withdrawals',
-            description: 'All deposits and withdrawals must be made in the available cryptocurrencies only on our website. MinusPlay.com is not responsible for loss or damage due to exchange rate fluctuations.'
+            description: `All deposits and withdrawals must be made in the available cryptocurrencies only on our website. ${emailConfig.websiteLink} is not responsible for loss or damage due to exchange rate fluctuations.`
         },
         {
             title: 'Wagering Requirements',
@@ -108,7 +109,7 @@ const TermsOfService = () => {
         },
         {
             title: 'Limitation of Liability',
-            description: 'MinusPlay.com is not liable for any direct, indirect, incidental, or consequential damages arising from your use of the website or services. We provide our services ‘as is’ and make no warranties of any kind.'
+            description: `${emailConfig.websiteLink} is not liable for any direct, indirect, incidental, or consequential damages arising from your use of the website or services. We provide our services ‘as is’ and make no warranties of any kind.`
         },
         {
             title: 'Changes to Terms',
@@ -139,7 +140,7 @@ const TermsOfService = () => {
 
                 {/* Paragraph for Contact */}
                 <Typography className={classes.ContactText}>
-                    If you have any questions about these terms and conditions, please contact us always, contact@minusplay.com.
+                    If you have any questions about these terms and conditions, please contact us always, {emailConfig.contactEmail}.
                 </Typography>
             </Box>
         </Box>

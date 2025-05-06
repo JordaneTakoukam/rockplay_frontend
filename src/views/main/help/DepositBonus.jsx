@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { ReactComponent as SearchIcon } from "assets/icons/search.svg";
+import emailConfig from "config/email_config";
 
 const useStyles = makeStyles(() => ({
     HelpLayout: {
@@ -115,7 +116,7 @@ const HelpLayout = () => {
             </Box>
             <Box className={classes.HelpTreeBox}>
                 <ul className={classes.HelpTree}>
-                    <li className={classes.HelpTreeItem}><Box>MinusPlay Support</Box></li>
+                    <li className={classes.HelpTreeItem}><Box>{emailConfig.appName} Support</Box></li>
                     <li className={classes.HelpTreeItem}><Box>Bonuses</Box></li>
                     <li className={classes.HelpTreeItem}><Box>Deposit Bonus</Box></li>
                 </ul>
@@ -123,7 +124,7 @@ const HelpLayout = () => {
             <Box className={classes.HelpDetailBox}>
                 <Box className={classes.HelpDetailSubBox}>
                     <h2 style={{ textTransform: 'uppercase', fontSize: '32px', lineHeight: '48px' }}>How does the deposit bonus work?</h2>
-                    <Box className={classes.NormalText}>MinusPlay gives you the most bang for your buck in bonuses. With our latest bonus pack, you can reach up to a 1260% match on four deposits. The bonus amounts will be awarded in locked PZD and available for you to unlock by wagering in any of the site’s games.</Box>
+                    <Box className={classes.NormalText}>{emailConfig.appName} gives you the most bang for your buck in bonuses. With our latest bonus pack, you can reach up to a 1260% match on four deposits. The bonus amounts will be awarded in locked PZD and available for you to unlock by wagering in any of the site’s games.</Box>
                     <Box className={classes.NormalText}>Take a look at the bonus breakdown:</Box>
                     <Box className={classes.NormalText} style={{ fontWeight: '900' }}><b>First Deposit</b></Box>
                     <Box className={classes.NormalText}>You can get a bonus of up to 270% of your first deposit. If you deposit between:</Box>

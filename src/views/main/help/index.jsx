@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import emailConfig from "config/email_config";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
@@ -51,7 +52,7 @@ const useStyles = makeStyles(() => ({
         maxWidth: 1044,
         margin: 'auto',
         marginTop: 60,
-        marginBottom:"60px",
+        marginBottom: "60px",
         display: 'flex',
         flexWrap: 'wrap',
         gap: 15,
@@ -59,7 +60,7 @@ const useStyles = makeStyles(() => ({
         "@media (max-width: 940px)": {
             width: '100%',
             gap: 20,
-            
+
         }
     },
     CategoryItemBox: {
@@ -71,7 +72,7 @@ const useStyles = makeStyles(() => ({
         "@media (max-width: 940px)": {
             width: '100%',
             minHeight: 280,
-            
+
         }
     },
     CategoryIcon: {
@@ -80,7 +81,7 @@ const useStyles = makeStyles(() => ({
         justifyContent: 'center',
         alignItems: 'center',
     }
-,    
+    ,
     CategoryTitle: {
         fontSize: 24,
         lineHeight: '31px',
@@ -125,7 +126,7 @@ const HelpLayout = () => {
     //     },
     //     {
     //         title: 'What is provably fair?',
-    //         category: 'about MinusPlay',
+    //         category: 'about appname',
     //         link: '/app/help/about/provably-fair/what-is-provably-fair'
     //     },
     //     {
@@ -135,15 +136,15 @@ const HelpLayout = () => {
     //     },
     //     {
     //         title: 'How to create your account',
-    //         category: 'about MinusPlay',
+    //         category: 'about appname',
     //         link: '/app/help/about/account/how-to-create-your-account'
     //     }
     // ];
 
     const categoryData = [
-        { title: 'MinusPlay games', icon: 'games', link: '/games' },
+        { title: `${emailConfig.appName} games`, icon: 'games', link: '/games' },
         // { title: 'Security', icon: 'security', link: '/security' },
-        { title: 'About MinusPlay', icon: 'about', link: '/about' },
+        { title: `About ${emailConfig.appName}`, icon: 'about', link: '/about' },
         { title: 'Faq', icon: 'faq', link: '/faq' },
         // { title: 'Wallet', icon: 'wallet', link: '/wallet' },
         // { title: 'Bonuses', icon: 'bonuses', link: '/bonuses' },
@@ -152,7 +153,7 @@ const HelpLayout = () => {
 
     return (
         <Box className={classes.HelpLayout}>
-       
+
             <Box className={classes.CategoryBox}>
                 {
                     categoryData.map((category, index) => (

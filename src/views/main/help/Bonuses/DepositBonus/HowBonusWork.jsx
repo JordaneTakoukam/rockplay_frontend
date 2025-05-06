@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import HelpTree from "../../HelpTree";
+import emailConfig from "config/email_config";
 
 const useStyles = makeStyles(() => ({
     MainLayout: {
@@ -91,7 +92,7 @@ const HowBonusWork = () => {
     const classes = useStyles();
 
     const helpTreeData = [
-        { to: '/app/help', label: 'MinusPlay Support' },
+        { to: '/app/help', label: `${emailConfig.appName} Support` },
         { to: '/app/help/bonuses', label: 'Bonuses' }
     ];
 
@@ -101,7 +102,7 @@ const HowBonusWork = () => {
                 <HelpTree data={helpTreeData} />
             </Box>
             <Box className={classes.DetailBox}>
-                <Typography className={classes.PageTitle}>HOW TO WITHDRAW MINUSPLAY DOLLAR</Typography>
+                <Typography className={classes.PageTitle}>HOW TO WITHDRAW {emailConfig.appName.toUpperCase()} DOLLAR</Typography>
                 <Typography className={classes.PageGroupTitle}>BitKong gives you the most bang for your buck in bonuses. With our latest bonus pack, you can reach up to a 1260% match on four deposits. The bonus amounts will be awarded in locked BKD and available for you to unlock by wagering in any of the site’s games.</Typography>
                 <Typography className={classes.PageGroupTitle}>Take a look at the bonus breakdown:</Typography>
                 <Box className={classes.NormalText} style={{ fontWeight: '900' }}><b>First Deposit</b></Box>

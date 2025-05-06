@@ -3,6 +3,7 @@ import { makeStyles } from "@mui/styles";
 import FooterCoinItem from "./FooterCoinItem";
 import { ReactComponent as FooterLogo } from "assets/icons/Logo.svg";
 import { Telegram, Twitter } from "@mui/icons-material";
+import emailConfig from "config/email_config";
 
 const useStyles = makeStyles(() => ({
     FooterBox: {
@@ -130,7 +131,7 @@ const MainFooter = () => {
             <Box className={classes.DividLine}></Box>
             <Box className={classes.CopyRightBox}>
                 <FooterLogo />
-                <span className={classes.CopyRightText}>copyright ©2024</span>
+                <span className={classes.CopyRightText}>copyright ©{emailConfig.copyright}</span>
                 <Box className={classes.ContactBox}>
                     <a
                         href="https://twitter.com"

@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import HelpTree from "../../HelpTree";
+import emailConfig from "config/email_config";
 
 const useStyles = makeStyles(() => ({
     MainLayout: {
@@ -76,7 +77,7 @@ const WhatisZelo = () => {
     const classes = useStyles();
 
     const helpTreeData = [
-        { to: '/app/help', label: 'MinusPlay Support' },
+        { to: '/app/help', label: `${emailConfig.appName} Support` },
         { to: '/app/help/about', label: 'About' }
     ];
 
@@ -87,7 +88,7 @@ const WhatisZelo = () => {
             </Box>
             <Box className={classes.DetailBox}>
                 <Typography className={classes.PageTitle}>WHAT IS ZELO?</Typography>
-                <Typography className={classes.PageGroupTitle}>At MinusPlay, ZELO (MinusPlay Dollar) is the official bonus currency. 1 ZELO = 1 USD. You can play any game & Rain on one or many players with ZELO.</Typography>
+                <Typography className={classes.PageGroupTitle}>At {emailConfig.appName}, ZELO ({emailConfig.appName} Dollar) is the official bonus currency. 1 ZELO = 1 USD. You can play any game & Rain on one or many players with ZELO.</Typography>
 
                 <Typography className={classes.PageTitle}>HOW TO UNLOCK YOUR ZELO?</Typography>
                 <Typography className={classes.PageGroupTitle}>Locked ZELO is obtained through specific bonuses, such as Deposit Bonus and Magic Wheel.</Typography>

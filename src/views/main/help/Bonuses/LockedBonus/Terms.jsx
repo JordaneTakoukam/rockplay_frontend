@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import HelpTree from "../../HelpTree";
+import emailConfig from "config/email_config";
 
 const useStyles = makeStyles(() => ({
     MainLayout: {
@@ -75,7 +76,7 @@ const ZeloWithdraw = () => {
     const classes = useStyles();
 
     const helpTreeData = [
-        { to: '/app/help', label: 'MinusPlay Support' },
+        { to: '/app/help', label: `${emailConfig.appName} Support` },
         { to: '/app/help/bonuses', label: 'Bonuses' }
     ];
 
@@ -85,7 +86,7 @@ const ZeloWithdraw = () => {
         'You accept that to unlock your bonuses you need to wager and that the unlocking ratio will be 2% of all the money you wagered.',
         'You acknowledge that the minimum amount of unlocked money you can claim is 5MUP.',
         'Bonus abuse caused by the registration of multiple accounts will be penalized with the termination of all the accounts belonging to the same user and the confiscation of the bonuses awarded.',
-        'MinusPlay reserves the right to amend, cancel, reclaim or refuse locked reward bonuses or any promotion at its own discretion.'
+        `${emailConfig.appName} reserves the right to amend, cancel, reclaim or refuse locked reward bonuses or any promotion at its own discretion.`
     ];
 
     return (

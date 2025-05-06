@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import emailConfig from "config/email_config";
 
 const useStyles = makeStyles(() => ({
     MainLayout: {
@@ -121,7 +122,7 @@ const PrivacyPolicy = () => {
         <Box className={classes.MainLayout}>
             <Box className={classes.DetailBox}>
                 <Typography className={classes.PageTitle}>Privacy Policy</Typography>
-                <Typography className={classes.PageGroupTitle} style={{ marginTop: "40px", marginBottom: "40px" }}>Welcome to minusPlay.com. We value your privacy and this policy explains how we handle your data.</Typography>
+                <Typography className={classes.PageGroupTitle} style={{ marginTop: "40px", marginBottom: "40px" }}>Welcome to {emailConfig.websiteLink}. We value your privacy and this policy explains how we handle your data.</Typography>
                 <Box className={classes.DataTextBox}>
                     {
                         data.map((item, index) => (
@@ -144,7 +145,7 @@ const PrivacyPolicy = () => {
                         ))
                     }
                 </Box>
-                <Typography className={classes.DataText} style={{ marginTop: 20 }}>If you have any questions about this privacy policy, please contact us always, contact@minusplay.com.</Typography>
+                <Typography className={classes.DataText} style={{ marginTop: 20 }}>If you have any questions about this privacy policy, please contact us always, {emailConfig.contactEmail}.</Typography>
             </Box>
         </Box>
     );

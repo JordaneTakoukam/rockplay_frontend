@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import HelpTree from "../../HelpTree";
+import emailConfig from "config/email_config";
 
 const useStyles = makeStyles(() => ({
     MainLayout: {
@@ -75,13 +76,13 @@ const ZeloWithdraw = () => {
     const classes = useStyles();
 
     const helpTreeData = [
-        { to: '/app/help', label: 'minusplay Support' },
+        { to: '/app/help', label: `${emailConfig.appName} Support` },
         { to: '/app/help/wallet', label: 'Wallet' }
     ];
 
     const data = [
         'Click on the Withdraw tab.',
-        'Select minusplay Dollar (ZELO) from the Withdraw from cryptocurrency tab.',
+        `Select ${emailConfig.appName} Dollar (ZELO) from the Withdraw from cryptocurrency tab.`,
         'Enter a Bitcoin (BTC) or Litecoin (LTC) address into the Address slot.',
         'Enter the amount you wish to withdraw on the Amount slot. For your convenience, the amount you will withdraw will be shown also in the secondary currency you’ve selected. You can also click on the option Max option and cash out all the available funds from that account.',
         'Click on Withdraw.'
@@ -93,7 +94,7 @@ const ZeloWithdraw = () => {
                 <HelpTree data={helpTreeData} />
             </Box>
             <Box className={classes.DetailBox}>
-                <Typography className={classes.PageTitle}>HOW TO WITHDRAW MINUSPLAY DOLLAR</Typography>
+                <Typography className={classes.PageTitle}>HOW TO WITHDRAW {emailConfig.appName.toUpperCase()} DOLLAR</Typography>
                 <Typography className={classes.PageGroupTitle}></Typography>
                 <Box className={classes.DataTextBox}>
                     {
