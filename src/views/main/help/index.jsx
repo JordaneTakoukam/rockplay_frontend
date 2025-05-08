@@ -144,7 +144,7 @@ const HelpLayout = () => {
     const categoryData = [
         { title: `${emailConfig.appName} games`, icon: 'games', link: '/games' },
         // { title: 'Security', icon: 'security', link: '/security' },
-        { title: `About ${emailConfig.appName}`, icon: 'about', link: '/about' },
+        // { title: `About ${emailConfig.appName}`, icon: 'about', link: '/about' },
         { title: 'Faq', icon: 'faq', link: '/faq' },
         // { title: 'Wallet', icon: 'wallet', link: '/wallet' },
         // { title: 'Bonuses', icon: 'bonuses', link: '/bonuses' },

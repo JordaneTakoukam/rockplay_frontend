@@ -272,13 +272,13 @@ const MainMenu = () => {
                 // }
             ]
         },
-        {
-            url: '/app/bonues',
-            text: 'Bonus',
-            icon: BonusIcon,
-            width: '25px',
-            height: '23px'
-        },
+        // {
+        //     url: '/app/bonues',
+        //     text: 'Bonus',
+        //     icon: BonusIcon,
+        //     width: '25px',
+        //     height: '23px'
+        // },
         {
             url: '/app/tournaments',
             text: 'Tournaments',
