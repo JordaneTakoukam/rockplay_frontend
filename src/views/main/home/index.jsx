@@ -455,7 +455,7 @@ const useStyles = makeStyles(() => ({
 const GameBannerItems = [
     { name: 'scissor', link: '/app/games/scissor' },
     { name: 'turtle', link: '/app/games/turtlerace' },
-    { name: 'mines', link: '/app/games/mines' },
+   // { name: 'mines', link: '/app/games/mines' },
     // { name: 'slot', link: '/app/games/slot' },
     // { name: 'plinko', link: '/app/games/plinko' },
     // { name: 'dice', link: '/app/games/dice' },
@@ -466,7 +466,7 @@ const GameBannerItems = [
 const GameBannerItemsMobile = [
     { name: 'scissor', link: '/app/games/scissor' },
     { name: 'turtle', link: '/app/games/turtlerace' },
-    { name: 'mines', link: '/app/games/mines' },
+    // { name: 'mines', link: '/app/games/mines' },
     // { name: 'slot', link: '/app/games/slot' },
     // { name: 'plinko', link: '/app/games/plinko' },
     // { name: 'dice', link: '/app/games/dice' },

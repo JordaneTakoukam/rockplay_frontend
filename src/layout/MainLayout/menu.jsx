@@ -234,12 +234,12 @@ const MainMenu = () => {
                     icon: TurtleRaceIcon,
                     available: true
                 },
-                {
-                    url: '/mines',
-                    text: 'Mines',
-                    icon: MinesIcon,
-                    available: true
-                },
+                // {
+                //     url: '/mines',
+                //     text: 'Mines',
+                //     icon: MinesIcon,
+                //     available: true
+                // },
                 // {
                 //     url: '/dice',
                 //     text: 'Dice',
