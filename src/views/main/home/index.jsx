@@ -211,32 +211,59 @@ const useStyles = makeStyles(() => ({
             marginTop: '5px'
         }
     },
-    GameListBox: {
-        width: '100%',    
+    GameList: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: '100%',
+        marginTop: '22px',
+        gap: '20px',
+        justifyContent: 'space-between', // Utilisez space-between pour répartir l'espace
 
-        // Masquer sur mobile et tablette
-        display: "block", // Par défaut, visible sur desktop
-        "@media (max-width: 1024px)": {
-            display: "none", // Masquer sur mobile et tablette
+        // Pour les derniers éléments lorsqu'ils ne remplissent pas la ligne
+        "&::after": {
+            content: '""',
+            flex: 'auto',
         },
 
-        "&>span": {
+        "@media (max-width: 1370px)": {
+            gap: '20px',
+        },
+
+        "@media (max-width: 681px)": {
+            marginTop: '6px',
+            gap: '15px',
+            justifyContent: 'flex-start', // Sur mobile on revient à flex-start
+        }
+    },
+
+    GameListBox: {
+        width: '100%',
+        display: "block",
+
+        "@media (max-width: 1024px)": {
+            display: "none",
+        },
+
+        "& > span": {
             fontFamily: "'Styrene A Web'",
             fontStyle: "normal",
-            fontWeight: "900",
+            fontWeight: 900,
             fontSize: "32px",
             lineHeight: "41px",
             textTransform: "uppercase",
             color: "#FFFFFF",
-            opacity: "0.5",
-            textShadow: "-8.08791px 8.08791px 0px rgba(0, 0, 0, 0.25)",
+            opacity: 0.5,
+            textShadow: "-8px 8px 0 rgba(0, 0, 0, 0.25)",
 
             "@media (max-width: 681px)": {
-                fontSize: '19px', // Plus petit texte pour mobile
+                fontSize: '19px',
                 lineHeight: '24px',
             }
         }
-    },
+    }
+
+    ,
 
     GameListBoxBonus: {
         width: '100%',
@@ -322,28 +349,7 @@ const useStyles = makeStyles(() => ({
 
 
 
-    GameList: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        marginTop: '22px',
-        width: '100%',
-        overflow: 'auto',
-        flexWrap: 'wrap',
-        "@media (max-width: 681px)": {
-            gap: '20px',  // Espacement entre les éléments pour mobile
-            marginTop: '6px',
-        },
-        "@media (max-width: 1370px)": {
-            justifyContent: 'space-between',  // Ajuster l'espacement sur les tailles intermédiaires
-            gap: '30px 0px',
-        },
-        "@media (min-width: 1370px)": {
-            gap: '30px',
-            justifyContent: 'flex-start',  // Alignement pour les grands écrans
-        }
-    },
+
 
     GameList2: {
         display: 'flex',
@@ -450,15 +456,10 @@ const GameBannerItems = [
     { name: 'scissor', link: '/app/games/scissor' },
     { name: 'turtle', link: '/app/games/turtlerace' },
     { name: 'mines', link: '/app/games/mines' },
-    { name: 'slot', link: '/app/games/slot' },
-];
-
-const GameBannerItems2 = [
-
-    { name: 'plinko', link: '/app/games/plinko' },
-    { name: 'dice', link: '/app/games/dice' },
-    { name: 'crash', link: '/app/games/crash' },
-
+    // { name: 'slot', link: '/app/games/slot' },
+    // { name: 'plinko', link: '/app/games/plinko' },
+    // { name: 'dice', link: '/app/games/dice' },
+    // { name: 'crash', link: '/app/games/crash' },
 ];
 
 
@@ -466,10 +467,10 @@ const GameBannerItemsMobile = [
     { name: 'scissor', link: '/app/games/scissor' },
     { name: 'turtle', link: '/app/games/turtlerace' },
     { name: 'mines', link: '/app/games/mines' },
-    { name: 'slot', link: '/app/games/slot' },
-    { name: 'plinko', link: '/app/games/plinko' },
-    { name: 'dice', link: '/app/games/dice' },
-    { name: 'crash', link: '/app/games/crash' },
+    // { name: 'slot', link: '/app/games/slot' },
+    // { name: 'plinko', link: '/app/games/plinko' },
+    // { name: 'dice', link: '/app/games/dice' },
+    // { name: 'crash', link: '/app/games/crash' },
 ];
 
 
@@ -509,6 +510,32 @@ const Home = () => {
 
     const authData = useSelector((state) => state.authentication);
 
+
+
+
+
+
+    const [justifyContent, setJustifyContent] = useState('flex-start');
+
+    useEffect(() => {
+        const updateJustify = () => {
+            const screenWidth = window.innerWidth;
+            const buttonWidth = 180; // largeur approximative d’un bouton
+            const itemsPerRow = Math.floor(screenWidth / buttonWidth);
+            if (itemsPerRow > 3) {
+                setJustifyContent('space-between');
+            } else {
+                setJustifyContent('flex-start');
+            }
+        };
+
+        updateJustify();
+        window.addEventListener('resize', updateJustify);
+        console.log(`State = ${justifyContent}`);
+
+        return () => window.removeEventListener('resize', updateJustify);
+    }, []);
+
     return (
         <Box className={classes.RootContainer}>
             <Box className={classes.CarouselBox}>
@@ -536,7 +563,10 @@ const Home = () => {
                         className={clsx(classes.GameListBox)}
                     >
                         <span>Our Games</span>
-                        <Box className={clsx(classes.GameList)}>
+                        <Box
+                            style={{ justifyContent }}
+
+                            className={clsx(classes.GameList)}>
                             {
                                 GameBannerItems.map((item, index) => (
                                     <Link to={item.link} key={index}>
@@ -548,7 +578,7 @@ const Home = () => {
                             }
 
                         </Box>
-                        <Box className={clsx(classes.GameList2)}>
+                        {/* <Box className={clsx(classes.GameList2)}>
                             {
                                 GameBannerItems2.map((item, index) => (
                                     <Link to={item.link} key={index}>
@@ -559,7 +589,7 @@ const Home = () => {
                                 ))
                             }
 
-                        </Box>
+                        </Box> */}
                     </Box>
                 }
 

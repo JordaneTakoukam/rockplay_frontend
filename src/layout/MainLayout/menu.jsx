@@ -240,30 +240,30 @@ const MainMenu = () => {
                     icon: MinesIcon,
                     available: true
                 },
-                {
-                    url: '/dice',
-                    text: 'Dice',
-                    icon: DiceIcon,
-                    available: true
-                },
-                {
-                    url: '/plinko',
-                    text: 'Plinko',
-                    icon: PlinkoIcon,
-                    available: true,
-                },
-                {
-                    url: '/slot',
-                    text: 'Slot',
-                    icon: SlotIcon,
-                    available: true,
-                },
-                {
-                    url: '/crash',
-                    text: 'Crash',
-                    icon: CrashIcon,
-                    available: true
-                }
+                // {
+                //     url: '/dice',
+                //     text: 'Dice',
+                //     icon: DiceIcon,
+                //     available: true
+                // },
+                // {
+                //     url: '/plinko',
+                //     text: 'Plinko',
+                //     icon: PlinkoIcon,
+                //     available: true,
+                // },
+                // {
+                //     url: '/slot',
+                //     text: 'Slot',
+                //     icon: SlotIcon,
+                //     available: true,
+                // },
+                // {
+                //     url: '/crash',
+                //     text: 'Crash',
+                //     icon: CrashIcon,
+                //     available: true
+                // }
                 // {
                 //     url: '/blackjack',
                 //     text: 'Blackjack',
