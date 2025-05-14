@@ -179,14 +179,21 @@ const DataTable = ({ historyState, gameType = "all" }) => {
                                 </Box>
                                 <Box style={{ width: '20%' }}>
                                     <Box className={classes.FlexBox}>
-                                        <Avatar alt={item.coinType.coinType} src={`/assets/images/coins/${item.coinType.coinType.toLowerCase()}.png`} sx={{ width: 28, height: 28 }} />
+                                        <Avatar
+                                            alt={item.coinType?.coinType || 'unknown'}
+                                            src={`/assets/images/coins/${item.coinType?.coinType?.toLowerCase() || 'default'}.png`}
+                                            sx={{ width: 28, height: 28 }}
+                                        />
                                         <span>{item.betAmount}</span>
                                     </Box>
                                 </Box>
                                 <Box style={{ width: '20%' }}>
                                     <Box className={classes.FlexBox}>
-                                        <Avatar alt={item.coinType.coinType} src={`/assets/images/coins/${item.coinType.coinType.toLowerCase()}.png`} sx={{ width: 28, height: 28 }} />
-                                        <span
+                                        <Avatar
+                                            alt={item.coinType?.coinType || 'unknown'}
+                                            src={`/assets/images/coins/${item.coinType?.coinType?.toLowerCase() || 'default'}.png`}
+                                            sx={{ width: 28, height: 28 }}
+                                        />                                        <span
                                             className={
                                                 item.roundResult === 'win' || item.roundResult === 'payout' ? classes.WinSpan
                                                     : item.roundResult === 'lost' ? classes.LostSpan
@@ -194,9 +201,27 @@ const DataTable = ({ historyState, gameType = "all" }) => {
                                             }
                                         >
                                             {
-                                                (item.roundResult === 'win' || item.roundResult === 'payout') ? roundToCurrencyPrecision(item.betAmount * item.payout, item.coinType.coinType.toLowerCase())
-                                                    : item.roundResult === 'draw' || item.roundResult === 'finish' ? item.betAmount : `-${item.betAmount}`
+                                                (item.roundResult === 'win' || item.roundResult === 'payout')
+                                                    ? (() => {
+                                                        // Extraction sûre de la devise
+                                                        const raw = item.coinType;
+                                                        const currency = typeof raw === 'string'
+                                                            ? raw.toLowerCase()
+                                                            : raw?.coinType?.toLowerCase() ?? 'usd';
+                                                        // Montant net gagné
+                                                        return roundToCurrencyPrecision(
+                                                            item.betAmount * item.payout,
+                                                            currency
+                                                        );
+                                                    })()
+                                                    : (item.roundResult === 'draw' || item.roundResult === 'finish')
+                                                        // Mise remboursée
+                                                        ? item.betAmount
+                                                        // Perte : affichage négatif
+                                                        : `-${item.betAmount}`
                                             }
+
+
                                         </span>
                                     </Box>
                                 </Box>

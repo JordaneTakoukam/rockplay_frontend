@@ -117,34 +117,34 @@ const GamesLayout = () => {
             link: '/app/games/mines',
             available: false
         },
-        {
-            gameName: 'Slot',
-            gameTitle: 'slot',
-            cardType: 1,
-            link: '/app/games/slot',
-            available: false
-        },
-        {
-            gameName: 'Plinko',
-            gameTitle: 'plinko',
-            cardType: 1,
-            link: '/app/games/plinko',
-            available: false
-        },
-        {
-            gameName: 'Crash',
-            gameTitle: 'crash',
-            cardType: 1,
-            link: '/app/games/crash',
-            available: false
-        },
-        {
-            gameName: 'Blackjack',
-            gameTitle: 'blackjack',
-            cardType: 1,
-            link: '/app/games/blackjack',
-            available: false
-        }
+        // {
+        //     gameName: 'Slot',
+        //     gameTitle: 'slot',
+        //     cardType: 1,
+        //     link: '/app/games/slot',
+        //     available: false
+        // },
+        // {
+        //     gameName: 'Plinko',
+        //     gameTitle: 'plinko',
+        //     cardType: 1,
+        //     link: '/app/games/plinko',
+        //     available: false
+        // },
+        // {
+        //     gameName: 'Crash',
+        //     gameTitle: 'crash',
+        //     cardType: 1,
+        //     link: '/app/games/crash',
+        //     available: false
+        // },
+        // {
+        //     gameName: 'Blackjack',
+        //     gameTitle: 'blackjack',
+        //     cardType: 1,
+        //     link: '/app/games/blackjack',
+        //     available: false
+        // }
     ]);
 
     useEffect(() => {
@@ -172,24 +172,7 @@ const GamesLayout = () => {
 
     return (
         <Box className={classes.GameLayout}>
-            <Box className={classes.HeaderBox}>
-                <Box className={classes.HeaderIconBox}>
-                    <img src={HeaderIcon} alt={'icon'} />
-                </Box>
-                <span>Provably fair games</span>
-            </Box>
-            <Box className={classes.GamesList}>
-                {
-                    gameList.map((item, index) => item.available ? (
-                        <Box key={index} className={clsx(item.cardType === 0 ? classes.LargeGameItem : '', classes.GameItem)}>
-                            {
-                                item.cardType === 0 ? <LargeGameCard {...item} />
-                                    : <NormalGameCard {...item} />
-                            }
-                        </Box>
-                    ) : null)
-                }
-            </Box>
+           
         </Box>
     );
 };

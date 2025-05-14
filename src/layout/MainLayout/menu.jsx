@@ -234,18 +234,18 @@ const MainMenu = () => {
                     icon: TurtleRaceIcon,
                     available: true
                 },
-                // {
-                //     url: '/mines',
-                //     text: 'Mines',
-                //     icon: MinesIcon,
-                //     available: true
-                // },
-                // {
-                //     url: '/dice',
-                //     text: 'Dice',
-                //     icon: DiceIcon,
-                //     available: true
-                // },
+                {
+                    url: '/mines',
+                    text: 'Mines',
+                    icon: MinesIcon,
+                    available: true
+                },
+                {
+                    url: '/dice',
+                    text: 'Dice',
+                    icon: DiceIcon,
+                    available: true
+                },
                 // {
                 //     url: '/plinko',
                 //     text: 'Plinko',
@@ -263,7 +263,7 @@ const MainMenu = () => {
                 //     text: 'Crash',
                 //     icon: CrashIcon,
                 //     available: true
-                // }
+                // },
                 // {
                 //     url: '/blackjack',
                 //     text: 'Blackjack',

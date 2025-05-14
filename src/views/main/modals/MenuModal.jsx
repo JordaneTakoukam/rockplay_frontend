@@ -299,18 +299,18 @@ const MenuModal = ({ open, setOpen }) => {
                     icon: TurtleRaceIcon,
                     available: true
                 },
-                // {
-                //     url: '/mines',
-                //     text: 'Mines',
-                //     icon: MinesIcon,
-                //     available: true
-                // },
-                // {
-                //     url: '/dice',
-                //     text: 'Dice',
-                //     icon: DiceIcon,
-                //     available: true
-                // },
+                {
+                    url: '/mines',
+                    text: 'Mines',
+                    icon: MinesIcon,
+                    available: true
+                },
+                {
+                    url: '/dice',
+                    text: 'Dice',
+                    icon: DiceIcon,
+                    available: true
+                },
                 // {
                 //     url: '/plinko',
                 //     text: 'Plinko',

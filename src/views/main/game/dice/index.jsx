@@ -23,10 +23,10 @@ import { configPlayAmount } from "config/config_play_amount";
 import LoadingGameBox from "views/loading_box/loading_game_box";
 
 const ChanceData = [
-    // { over: 3, under: 11, multiplier: 1.03, chance: 91.67 },
-    // { over: 4, under: 10, multiplier: 1.14, chance: 83.33 },
-    // { over: 5, under: 9, multiplier: 1.31, chance: 72.22 },
-    // { over: 6, under: 8, multiplier: 1.62, chance: 58.33 },
+    { over: 3, under: 11, multiplier: 1.03, chance: 91.67 },
+    { over: 4, under: 10, multiplier: 1.14, chance: 83.33 },
+    { over: 5, under: 9, multiplier: 1.31, chance: 72.22 },
+    { over: 6, under: 8, multiplier: 1.62, chance: 58.33 },
     { over: 7, under: 7, multiplier: 2.28, chance: 41.67 },
     { over: 8, under: 6, multiplier: 3.42, chance: 27.78 },
     { over: 9, under: 5, multiplier: 5.70, chance: 16.67 },

@@ -455,10 +455,10 @@ const useStyles = makeStyles(() => ({
 const GameBannerItems = [
     { name: 'scissor', link: '/app/games/scissor' },
     { name: 'turtle', link: '/app/games/turtlerace' },
-   // { name: 'mines', link: '/app/games/mines' },
+   { name: 'mines', link: '/app/games/mines' },
     // { name: 'slot', link: '/app/games/slot' },
     // { name: 'plinko', link: '/app/games/plinko' },
-    // { name: 'dice', link: '/app/games/dice' },
+    { name: 'dice', link: '/app/games/dice' },
     // { name: 'crash', link: '/app/games/crash' },
 ];
 
@@ -466,10 +466,10 @@ const GameBannerItems = [
 const GameBannerItemsMobile = [
     { name: 'scissor', link: '/app/games/scissor' },
     { name: 'turtle', link: '/app/games/turtlerace' },
-    // { name: 'mines', link: '/app/games/mines' },
+    { name: 'mines', link: '/app/games/mines' },
     // { name: 'slot', link: '/app/games/slot' },
     // { name: 'plinko', link: '/app/games/plinko' },
-    // { name: 'dice', link: '/app/games/dice' },
+    { name: 'dice', link: '/app/games/dice' },
     // { name: 'crash', link: '/app/games/crash' },
 ];
 
@@ -531,7 +531,6 @@ const Home = () => {
 
         updateJustify();
         window.addEventListener('resize', updateJustify);
-        console.log(`State = ${justifyContent}`);
 
         return () => window.removeEventListener('resize', updateJustify);
     }, []);
