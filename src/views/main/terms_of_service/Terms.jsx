@@ -115,10 +115,10 @@ const TermsOfService = () => {
             title: 'Changes to Terms',
             description: 'We reserve the right to modify these Terms at any time. We will notify you of material changes by posting a notice on our website or through other communication methods. By continuing to use our services, you agree to the revised Terms.'
         },
-        {
-            title: 'Termination',
-            description: 'We reserve the right to suspend or terminate your account if you violate these Terms or engage in fraudulent or illegal activities.'
-        }
+        // {
+        //     title: 'Termination',
+        //     description: 'We reserve the right to suspend or terminate your account if you violate these Terms or engage in fraudulent or illegal activities.'
+        // }
     ];
 
     return (

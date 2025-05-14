@@ -134,7 +134,7 @@ const MainFooter = () => {
                 <span className={classes.CopyRightText}>copyright ©{emailConfig.copyright}</span>
                 <Box className={classes.ContactBox}>
                     <a
-                        href="https://twitter.com"
+                        href={emailConfig.twitterLink}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={classes.IconLink}
@@ -142,7 +142,7 @@ const MainFooter = () => {
                         <Twitter />
                     </a>
                     <a
-                        href="https://telegram.org"
+                        href={emailConfig.telegramLink}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={`${classes.IconLink} telegram`}
