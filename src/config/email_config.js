@@ -1,5 +1,5 @@
 const emailConfig = {
-    contactEmail: "contact@minusplay.com",
+    contactEmail: "bitrockwallet@gmail.com",
     websiteLink: "https://rockplay.fun",
     appName: "RockPlay",
     copyright: "2025",
