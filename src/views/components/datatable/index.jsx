@@ -104,6 +104,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const DataTable = ({ historyState, gameType = "all" }) => {
+
     const classes = useStyles();
     const { addToast } = useToasts();
     const dispatch = useDispatch();
@@ -121,6 +122,8 @@ const DataTable = ({ historyState, gameType = "all" }) => {
         Config?.Root?.socket?.off("updateBetHistory");
         Config?.Root?.socket?.on("updateBetHistory", (data) => {
             setNewBetData(data);
+            console.log(`\nNEW HISTORY ADD = ${JSON.stringify(data)}`);
+
         });
         // eslint-disable-next-line
     }, [dispatch]);
@@ -146,6 +149,8 @@ const DataTable = ({ historyState, gameType = "all" }) => {
 
     const getHistoryData = async () => {
         const response = await getBetHistoryData({ gameType });
+        console.log(`getHistoryData = ${JSON.stringify(response)}`);
+
         if (response.status) {
             setTableData([...response.data]);
         }

@@ -280,8 +280,9 @@ const MenuModal = ({ open, setOpen }) => {
             width: '34px',
             height: '27px'
         },
+        // menu version mobile
         {
-            url: '/app/home',
+            url: '/app/games',
             text: 'Games',
             icon: GamesIcon,
             width: '34px',
@@ -337,13 +338,13 @@ const MenuModal = ({ open, setOpen }) => {
                 // }
             ]
         },
-        {
-            url: '/app/bonues',
-            text: 'Bonus',
-            icon: BonusIcon,
-            width: '25px',
-            height: '23px'
-        },
+        // {
+        //     url: '/app/bonues',
+        //     text: 'Bonus',
+        //     icon: BonusIcon,
+        //     width: '25px',
+        //     height: '23px'
+        // },
         {
             url: '/app/tournaments',
             text: 'Tournaments',

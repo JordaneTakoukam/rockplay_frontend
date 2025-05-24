@@ -25,7 +25,7 @@ import { useToasts } from "react-toast-notifications";
 const useStyles = makeStyles(() => ({
     MenuBox: {
         padding: '10px 8px',
-        marginTop:"30px"
+        marginTop: "30px"
     },
     MenuOpen: {
         width: '269px',
@@ -48,7 +48,7 @@ const useStyles = makeStyles(() => ({
         "&>li:last-child": {
             marginBottom: '0px'
         },
-        
+
     },
     BonusBox: {
         height: '60px',
@@ -215,6 +215,8 @@ const MainMenu = () => {
             width: '34px',
             height: '27px'
         },
+        // versioon pour les desktop
+
         {
             url: '/app/home',
             text: 'Games',
@@ -222,6 +224,7 @@ const MainMenu = () => {
             width: '34px',
             height: '25px',
             child: [
+
                 {
                     url: '/scissor',
                     text: 'Scissor',
@@ -387,7 +390,7 @@ const MainMenu = () => {
                                                             <Link
                                                                 className={classes.MenuItemLink}
                                                                 to={'/app/games' + childItem.url}
-                                                                onClick={() => handleMenuRouter('/app/games'+ childItem.url)}
+                                                                onClick={() => handleMenuRouter('/app/games' + childItem.url)}
                                                             >
                                                                 <img
                                                                     src={childItem.icon}
@@ -412,7 +415,7 @@ const MainMenu = () => {
                     }
                 </div>
             </ul>
-            
+
 
             <Box className={classes.PolicyBox}>
                 <Link to="/app/terms-and-conditions" className={classes.PrivacyPolicyLink}>Terms & conditions</Link>

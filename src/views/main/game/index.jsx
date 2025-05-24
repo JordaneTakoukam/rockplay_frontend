@@ -92,7 +92,7 @@ const GamesLayout = () => {
         {
             gameName: 'Scissor',
             gameTitle: 'scissor',
-            cardType: 1,
+            cardType: 2,
             link: '/app/games/scissor',
             available: false
         },
