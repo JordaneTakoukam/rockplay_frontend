@@ -122,7 +122,7 @@ const DataTable = ({ historyState, gameType = "all" }) => {
         Config?.Root?.socket?.off("updateBetHistory");
         Config?.Root?.socket?.on("updateBetHistory", (data) => {
             setNewBetData(data);
-            console.log(`\nNEW HISTORY ADD = ${JSON.stringify(data)}`);
+            console.log(`\nNEW  HISTORY ADD = ${JSON.stringify(data)}`);
 
         });
         // eslint-disable-next-line
