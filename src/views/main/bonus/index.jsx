@@ -18,6 +18,7 @@ import BonusBannerIcon1 from "assets/icons/BonusBannerIcon1.png";
 import BonusBannerIcon2 from "assets/icons/BonusBannerIcon2.png";
 import BonusBannerIcon3 from "assets/icons/BonusBannerIcon3.png";
 import BonusBannerIcon4 from "assets/icons/BonusBannerIcon4.png";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles(() => ({
     RootContainer: {
@@ -182,126 +183,102 @@ const useStyles = makeStyles(() => ({
         }
     }
 }));
-
 const BonusLayout = () => {
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
+  const classes = useStyles();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
+  const [depositBonusData, setDepositBonusData] = useState([
+    { minDeposit: 30, percents: [120, 150, 270] },
+    { minDeposit: 60, percents: [150, 220, 300] },
+    { minDeposit: 120, percents: [170, 250, 330] },
+    { minDeposit: 150, percents: [190, 270, 360] },
+  ]);
 
-    const classes = useStyles();
+  // 👉 Récupérer toutes les transactions depuis Redux
+  const transactions = useSelector((state) => state.transactions || []);
+  const depositTransactions = transactions.filter(
+    (t) => t.type_transaction === "deposit"
+  );
 
-    const [depositBonusData, setDepositBonusData] = useState([
-        {
-            minDeposit: 30,
-            percents: [120, 150, 270]
-        },
-        {
-            minDeposit: 60,
-            percents: [150, 220, 300]
-        },
-        {
-            minDeposit: 120,
-            percents: [170, 250, 330]
-        },
-        {
-            minDeposit: 150,
-            percents: [190, 270, 360]
-        }
-    ]);
+  const activeCardIndex = depositTransactions.length;
 
-    useEffect(() => {
-        initFunc();
-    }, []);
+  useEffect(() => {
+    initFunc();
+  }, []);
 
-    const initFunc = async () => {
-        const response = await getDepositBonus();
-        if (response.status) {
-            let bonusData = [
-                {
-                    minDeposit: 30,
-                    percents: [120, 150, 270]
-                },
-                {
-                    minDeposit: 60,
-                    percents: [150, 220, 300]
-                },
-                {
-                    minDeposit: 120,
-                    percents: [170, 250, 330]
-                },
-                {
-                    minDeposit: 150,
-                    percents: [190, 270, 360]
-                }
-            ];
-            if (response.data) {
-                // eslint-disable-next-line
-                response.data.map((item, index) => {
-                    let percentIndex = item.amountLevel === 'Low' ? 0 :
-                        item.amountLevel === 'Medium' ? 1 : 2;
-                    if (item.amountLevel === 'Low') {
-                        bonusData[item.depositCount - 1].minDeposit = item.startAmount;
-                    }
-                    bonusData[item.depositCount - 1].percents[percentIndex] = item.percent;
-                });
-            }
-            setDepositBonusData([...bonusData]);
-        }
-    };
+  const initFunc = async () => {
+    const response = await getDepositBonus();
+    if (response.status) {
+      let bonusData = [...depositBonusData];
+      if (response.data) {
+        response.data.forEach((item) => {
+          const percentIndex =
+            item.amountLevel === "Low"
+              ? 0
+              : item.amountLevel === "Medium"
+              ? 1
+              : 2;
+          if (item.amountLevel === "Low") {
+            bonusData[item.depositCount - 1].minDeposit = item.startAmount;
+          }
+          bonusData[item.depositCount - 1].percents[percentIndex] =
+            item.percent;
+        });
+      }
+      setDepositBonusData(bonusData);
+    }
+  };
 
-    return (
-        <Box className={classes.RootContainer}>
-            <Box className={classes.CarouselBox}>
-                <Box className={classes.BannerBox}>
-                    <img className={classes.BannerCharacter} src="/assets/images/BonusPageCharacter.png" alt="banner-character" />
-                    <Box className={classes.BannerTextBox}>
-                        <Box className={classes.BannerIconsBox}>
-                            <img src={BonusBannerIcon1} alt="icon" width="84px" height="84px" />
-                            <img src={BonusBannerIcon2} alt="icon" width="84px" height="84px" />
-                            <img src={BonusBannerIcon3} alt="icon" width="84px" height="84px" />
-                            <img src={BonusBannerIcon4} alt="icon" width="84px" height="84px" />
-                        </Box>
-                        <Box className={classes.BannerTitle}>Promotions &</Box>
-                        <Box className={classes.BannerTitle}><span>Bonuses</span></Box>
-                        <span className={classes.BannerText}>Supercharge your winnings with some extra swag</span>
-                    </Box>
-                </Box>
-                <Box className={classes.GameListBox}>
-                    <span>Available to claim</span>
-                    <Box className={clsx(classes.ClaimList, "")}>
-                        <TournamentCard locked={false} />
-                        <RainCard locked={true} />
-                        <GivewayCard locked={true} />
-                        <GiftCard locked={true} />
-                        <TournamentCard locked={true} />
-                        <RainCard locked={true} />
-                        <GivewayCard locked={true} />
-                        <GiftCard locked={true} />
-                    </Box>
-                </Box>
-                <Box className={classes.GameListBox}>
-                    <span>Deposit bonus</span>
-                    <Box className={classes.BounsList}>
-                        <DepositBonusCard cardNumber={1} {...depositBonusData[0]} active={true} />
-                        <DepositBonusCard cardNumber={2} {...depositBonusData[1]} active={false} />
-                        <DepositBonusCard cardNumber={3} {...depositBonusData[2]} active={false} />
-                        <DepositBonusCard cardNumber={4} {...depositBonusData[3]} active={false} />
-                    </Box>
-                    <Divider sx={{ mt: 6, mb: 6, borderColor: '#2A2A35' }} />
-                    <Box className={classes.BounsList}>
-                        <UnLockerCard />
-                        <FreeSpinCard />
-                        <RechargeCard />
-                        <PromotionCodeCard />
-                        <SubscribeCard />
-                        <JackpotCard />
-                    </Box>
-                </Box>
+  return (
+    <Box className={classes.RootContainer}>
+      <Box className={classes.CarouselBox}>
+        <Box className={classes.BannerBox}>
+          <img
+            className={classes.BannerCharacter}
+            src="/assets/images/BonusPageCharacter.png"
+            alt="banner-character"
+          />
+          <Box className={classes.BannerTextBox}>
+            <Box className={classes.BannerIconsBox}>
+              <img src={BonusBannerIcon1} alt="icon" width="84px" height="84px" />
+              <img src={BonusBannerIcon2} alt="icon" width="84px" height="84px" />
+              <img src={BonusBannerIcon3} alt="icon" width="84px" height="84px" />
+              <img src={BonusBannerIcon4} alt="icon" width="84px" height="84px" />
             </Box>
+            <Box className={classes.BannerTitle}>Promotions &</Box>
+            <Box className={classes.BannerTitle}><span>Bonuses</span></Box>
+            <span className={classes.BannerText}>Supercharge your winnings with some extra swag</span>
+          </Box>
         </Box>
-    );
+
+        <Box className={classes.GameListBox}>
+          <span>Deposit bonus</span>
+          <Box className={classes.BounsList}>
+            {depositBonusData.map((data, index) => (
+              <DepositBonusCard
+                key={index}
+                cardNumber={index + 1}
+                {...data}
+                active={index === activeCardIndex}
+              />
+            ))}
+          </Box>
+
+          <Divider sx={{ mt: 6, mb: 6, borderColor: '#2A2A35' }} />
+
+          <Box className={classes.BounsList}>
+            <RechargeCard />
+            <PromotionCodeCard />
+            <SubscribeCard />
+            <JackpotCard />
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+  );
 };
 
-export default BonusLayout; 
+export default BonusLayout;

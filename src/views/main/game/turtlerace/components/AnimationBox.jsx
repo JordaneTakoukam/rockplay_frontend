@@ -172,21 +172,21 @@ const useStyles = makeStyles(() => ({
         backgroundColor: '#005CF3'
     },
     FirstAnimation: {
-        transition: 'margin 9s ease-out',
+        transition: 'margin 5s ease-out',
         marginLeft: 'calc(100% - 162px - 50px - 20px - 162px) !important',
         "@media (max-width: 1444px)": {
             marginLeft: 'calc(100% - 96.6px - 50px - 20px - 96.6px) !important'
         }
     },
     SecondAnimation: {
-        transition: 'margin 9.5s ease-out',
+        transition: 'margin 5.5s ease-out',
         marginLeft: 'calc(100% - 162px - 50px - 20px - 162px) !important',
         "@media (max-width: 1444px)": {
             marginLeft: 'calc(100% - 96.6px - 50px - 20px - 96.6px) !important'
         }
     },
     ThirdAnimation: {
-        transition: 'margin 10s ease-out',
+        transition: 'margin 6s ease-out',
         marginLeft: 'calc(100% - 162px - 50px - 20px - 162px) !important',
         "@media (max-width: 1444px)": {
             marginLeft: 'calc(100% - 96.6px - 50px - 20px - 96.6px) !important'

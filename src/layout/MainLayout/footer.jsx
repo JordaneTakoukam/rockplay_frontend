@@ -84,6 +84,7 @@ const useStyles = makeStyles(() => ({
         "&.telegram:hover": {
             color: "#0088cc", // Couleur pour Telegram
         },
+        marginRight:"10px"
     },
 }));
 

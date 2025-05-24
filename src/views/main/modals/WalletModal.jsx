@@ -716,12 +716,12 @@ const WalletModal = ({ open, setOpen }) => {
                                                         {configWithdrawImport[currencies[depositCurrencyType].name.toLowerCase()].minDeposit}
                                                     </Box>
                                                 </Box>
-                                                <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+                                                {/* <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
                                                     <span>Fees</span>
                                                     <Box sx={{ fontSize: '12px' }}>
                                                         A Fee up to {configWithdrawImport.withdraw_fee}% will be applied
                                                     </Box>
-                                                </Box>
+                                                </Box> */}
 
                                             </Box>
                                         </Box>
@@ -820,14 +820,14 @@ const WalletModal = ({ open, setOpen }) => {
                                             {configWithDraw.max.toFixed(precisionByCurrency[currencies[withdrawCurrencyType].name.toLowerCase()])}
                                         </Box>
                                     </Box>
-                                    <Box className={classes.CurrencyBlockRow}>
+                                    {/* <Box className={classes.CurrencyBlockRow}>
                                         <span>Fees</span>
                                         <Box className={classes.CurrencyDetail}>
                                             <span style={{ fontSize: '12px' }}>
                                                 Withdrawal fees up to {configWithdrawImport.withdraw_fee}% will be applied
                                             </span>
                                         </Box>
-                                    </Box>
+                                    </Box> */}
                                 </Box>
                             </Box>
                             <Box className={classes.WithdrawButtonBox}>

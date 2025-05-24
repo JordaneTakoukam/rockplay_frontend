@@ -7,6 +7,7 @@ import modalReducer from "./modal";
 import settingReducer from "./setting";
 import currencyReducer from "./currency";
 import privacyReducer from "./privacy";
+import transactionReducer from "./transaction";
 
 const rootReducer = combineReducers({
     authentication: authReducer,
@@ -16,7 +17,10 @@ const rootReducer = combineReducers({
     modalOption: modalReducer,
     settingOption: settingReducer,
     currencyOption: currencyReducer,
-    privacyOption: privacyReducer
+    privacyOption: privacyReducer,
+
+    transaction: transactionReducer,
+
 });
 
 export default rootReducer;

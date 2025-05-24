@@ -455,7 +455,7 @@ const useStyles = makeStyles(() => ({
 const GameBannerItems = [
     { name: 'scissor', link: '/app/games/scissor' },
     { name: 'turtle', link: '/app/games/turtlerace' },
-   { name: 'mines', link: '/app/games/mines' },
+    { name: 'mines', link: '/app/games/mines' },
     // { name: 'slot', link: '/app/games/slot' },
     // { name: 'plinko', link: '/app/games/plinko' },
     { name: 'dice', link: '/app/games/dice' },
@@ -614,20 +614,22 @@ const Home = () => {
 
                 }
                 <Box style={{ marginTop: "50px" }} className={classes.GameListBoxBonus}>
-                    <span>MINUS PLAY</span>
+                    <span>ROCKPLAY</span>
                     <Box className={classes.BounsList}>
-                        <BonusesCard
-                            title={'SOCIAL GIVEAWAY'}
-                            text={'Spin for daily rewards on our socials. Follow us on X and Telegram.'}
-                            icon="BonusFreeSpinIcon"
-                            colored={false}
-                        />
+                    
                         <BonusesCard
                             title={'Tournaments'}
                             text={'Join the action! Participate in daily, weekly & monthly wager tournaments and compete for Big Prizes.'}
                             icon="BonusTournamentsIcon"
+                            colored={false}
+                        />
+                        <BonusesCard
+                            title={'Deposit Bonuses'}
+                            text={'Get over 1260% in deposit bonuses! Boost your funds massively with every deposit you make.'}
+                            icon="BonusFreeSpinIcon"
                             colored={true}
                         />
+
                         <BonusesCard
                             title={'And more coming soon!'}
                             text={'We are developing the next crypto provably fair wagering gaming platform with zero KYC and innovative features.'}
@@ -636,6 +638,24 @@ const Home = () => {
                         />
                     </Box>
                 </Box>
+
+                <Box className={clsx(classes.BannerBox, classes.BonusBannerBox)}>
+                    <img className={classes.BannerCharacter} src="/assets/images/BonusBannerCharacter.png" alt="banner-character-bonus" />
+                    <Box className={classes.BannerTextBox}>
+                        <Box className={classes.BannerTitleBonus}>{bottomBannerData.text1}</Box>
+                        <Box className={classes.BannerTitleBonus}>{bottomBannerData.text2}</Box>
+                        <span className={classes.BannerText} style={{ marginTop: '20px' }}>{bottomBannerData.text3}</span>
+
+                        <Link
+                            to={'/app/bonues'}
+                            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                            className={classes.BannerButtonBox}>
+                            <Box className={clsx(classes.BannerButton, classes.RegisterButton)}>About Bonuses</Box>
+                        </Link>
+                    </Box>
+                </Box>
+
+
                 <Box className={classes.HistoryBox}>
                     <Box className={classes.HistoryStateBox}>
                         <Button onClick={() => setHistoryState(0)} className={clsx(classes.HistoryTabButton, historyState === 0 ? classes.SelectedButton : '')}>Recent games</Button>
@@ -657,21 +677,7 @@ const Home = () => {
                     </Box>
                 </Box> */}
 
-                <Box className={clsx(classes.BannerBox, classes.BonusBannerBox)}>
-                    <img className={classes.BannerCharacter} src="/assets/images/BonusBannerCharacter.png" alt="banner-character-bonus" />
-                    <Box className={classes.BannerTextBox}>
-                        <Box className={classes.BannerTitleBonus}>{bottomBannerData.text1}</Box>
-                        <Box className={classes.BannerTitleBonus}>{bottomBannerData.text2}</Box>
-                        <span className={classes.BannerText} style={{ marginTop: '20px' }}>{bottomBannerData.text3}</span>
 
-                        <Link
-                            to={'/app/bonues'}
-                            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                            className={classes.BannerButtonBox}>
-                            <Box className={clsx(classes.BannerButton, classes.RegisterButton)}>About Bonuses</Box>
-                        </Link>
-                    </Box>
-                </Box>
             </Box>
 
 

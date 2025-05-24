@@ -4,6 +4,38 @@ import clsx from "clsx";
 import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles(() => ({
+    DepositButton: {
+        width: "80%",
+        height: "51px",
+        background: "#FED847",
+        borderRadius: "8px",
+        fontFamily: "'Styrene A Web'",
+        fontStyle: "normal",
+        fontWeight: 700,
+        fontSize: "14px",
+        lineHeight: "18px",
+        textAlign: "center",
+        textTransform: "uppercase",
+        color: "#1F1E25",
+        cursor: "pointer",
+        transition: "background 0.3s",
+        "&:hover": {
+            background: "#f5c900"
+        },
+        "@media (max-width: 681px)": {
+            fontSize: 12,
+            lineHeight: '14px',
+            height: 35
+        }
+    },
+    DepositButtonInactive: {
+        pointerEvents: "none",
+        background: "#FED847", // Pas de changement de couleur
+        "&:hover": {
+            background: "#FED847" // Désactive l'animation hover
+        },
+        cursor: "default"
+    },
     CardBox: {
         width: "calc(25% - 15px)",
         height: "392px",
@@ -186,10 +218,20 @@ const DepositBonusCard = ({ cardNumber, minDeposit, percents, active = false }) 
             <Box className={classes.MinDepositBox}>
                 <span>Min deposit:</span>
                 <Box>
-                    {minDeposit}
+                    {minDeposit}$
                 </Box>
             </Box>
-            <Button className={classes.DepositButton} onClick={handleDeposit}>Deposit now</Button>
+            {/* <Button className={classes.DepositButton} onClick={handleDeposit}>Deposit now</Button> */}
+            <Button
+                className={clsx(
+                    classes.DepositButton,
+                    !active && classes.DepositButtonInactive
+                )}
+                onClick={handleDeposit}
+            >
+                Deposit now
+            </Button>
+
         </Box>
     );
 };
