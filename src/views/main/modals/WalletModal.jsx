@@ -453,37 +453,37 @@ const WalletModal = ({ open, setOpen }) => {
                 return;
             }
 
-            // Validation du solde
-            if (availableAmount <= 0) {
-                addToast('Insufficient balance for withdrawal', {
-                    appearance: 'warning',
-                    autoDismiss: true
-                });
-                return;
-            }
+            // // Validation du solde
+            // if (availableAmount <= 0) {
+            //     addToast('Insufficient balance for withdrawal', {
+            //         appearance: 'warning',
+            //         autoDismiss: true
+            //     });
+            //     return;
+            // }
 
-            // Validation montant minimum
-            if (withdrawalAmount < minWithdrawal) {
-                addToast(`Minimum withdrawal: ${minWithdrawal.toFixed(precisionByCurrency[currencyKey])} ${currency.name.toUpperCase()}`,
-                    { appearance: 'warning', autoDismiss: true });
-                return;
-            }
+            // // Validation montant minimum
+            // if (withdrawalAmount < minWithdrawal) {
+            //     addToast(`Minimum withdrawal: ${minWithdrawal.toFixed(precisionByCurrency[currencyKey])} ${currency.name.toUpperCase()}`,
+            //         { appearance: 'warning', autoDismiss: true });
+            //     return;
+            // }
 
-            // Nouvelle validation du montant maximum
-            if (withdrawalAmount > maxWithdrawal) {
-                addToast(`Maximum withdrawal: ${maxWithdrawal.toFixed(precisionByCurrency[currencyKey])} ${currency.name.toUpperCase()}`,
-                    { appearance: 'warning', autoDismiss: true });
-                return;
-            }
+            // // Nouvelle validation du montant maximum
+            // if (withdrawalAmount > maxWithdrawal) {
+            //     addToast(`Maximum withdrawal: ${maxWithdrawal.toFixed(precisionByCurrency[currencyKey])} ${currency.name.toUpperCase()}`,
+            //         { appearance: 'warning', autoDismiss: true });
+            //     return;
+            // }
 
-            // Vérification solde suffisant
-            if (withdrawalAmount > availableAmount) {
-                addToast(`Insufficient balance for withdrawal`, {
-                    appearance: 'warning',
-                    autoDismiss: true
-                });
-                return;
-            }
+            // // Vérification solde suffisant
+            // if (withdrawalAmount > availableAmount) {
+            //     addToast(`Insufficient balance for withdrawal`, {
+            //         appearance: 'warning',
+            //         autoDismiss: true
+            //     });
+            //     return;
+            // }
 
             // Envoi de la requête
             const request = {

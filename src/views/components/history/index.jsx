@@ -190,17 +190,18 @@ const HistoryContainer = () => {
                       ? `${item.uuid.slice(0, 10)}...${item.uuid.slice(-8)}`
                       : "-"
                   }`;
+              } else if (item.type_transaction === "bonus") {
+                return "Bonus";
               } else {
-                return `TR_ID: ${item.type_transaction === "bonus" ? "bonus" :
-
-                    item.txId
-                      ? `${item.txId.slice(0, 12)}...${item.txId.slice(-8)}`
-                      : item.uuid && item.uuid !== "-"
-                        ? `${item.uuid.slice(0, 10)}...${item.uuid.slice(-8)}`
-                        : "-"
+                return `TR_ID: ${item.txId
+                  ? `${item.txId.slice(0, 12)}...${item.txId.slice(-8)}`
+                  : item.uuid && item.uuid !== "-"
+                    ? `${item.uuid.slice(0, 10)}...${item.uuid.slice(-8)}`
+                    : "-"
                   }`;
               }
             };
+
 
             return (
               <Box key={index} className={classes.TransactionRow}>
