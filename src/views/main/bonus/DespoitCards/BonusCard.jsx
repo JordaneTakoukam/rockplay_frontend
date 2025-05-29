@@ -284,10 +284,10 @@ const DepositBonusCard = ({ cardNumber, minDeposit, bonusPercentage }) => {
             <Button
                 className={clsx(
                     classes.DepositButton,
-                    classes.DepositButtonInactive
+                    !active && classes.DepositButtonInactive // Seulement appliquer si inactif
                 )}
                 onClick={handleDeposit}
-            // disabled={!active}
+                disabled={!active} // Désactiver le clic si inactif
             >
                 {showExpiredBonus ? (
                     <>
@@ -298,6 +298,7 @@ const DepositBonusCard = ({ cardNumber, minDeposit, bonusPercentage }) => {
                     'Deposit now'
                 )}
             </Button>
+
 
         </Box>
     );

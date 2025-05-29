@@ -2,8 +2,6 @@ import { makeStyles } from "@mui/styles";
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTransactionHistoryAction } from "redux/actions/transaction";
-
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { ArrowDownward, ArrowUpward } from "@mui/icons-material";
