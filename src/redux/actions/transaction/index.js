@@ -1,42 +1,44 @@
 import Config from 'config/index';
 
-export const getTransactionHistoryAction = (userId, currencies) => async (dispatch) => {
+export const getTransactionHistoryAction = async (userId) => {
     try {
         const response = await Config.Api.getTransactionHistory({ userId });
 
-        if (response.status && Array.isArray(response.data)) {
-            const history = [];
+        return response.data;
 
-            response.data.forEach((transaction) => {
-                const { coinType, type } = transaction.currency || {};
-                if (!coinType || !type) return;
-
-                const currency = currencies.find(
-                    (item) =>
-                        item.name.toLowerCase() === coinType.toLowerCase() &&
-                        item.token.toLowerCase() === type.toLowerCase()
-                );
-
-                if (currency) {
-                    history.push({
-                        currency: currency,
-                        amount: transaction.amount,
-                        txId: transaction.txId,
-                        pending: transaction.pending ?? "-",
-                        withdraw_request: transaction.withdraw_request ?? "-",
-                        type_transaction: transaction.type_transaction || "-",
-                        date: transaction.createdAt || "-",
-                        uuid: transaction.uuid || "-",
-                    });
-                }
-            });
-
-            dispatch({
-                type: 'SET_TRANSACTION_HISTORY',
-                data: history,
-            });
-        }
     } catch (error) {
         console.error("Error fetching transaction history:", error);
+        return [];
+    }
+};
+
+
+
+
+
+
+export const getTransactionHistoryExceptBonusAction = async (userId) => {
+    try {
+
+        const response = await Config.Api.getTransactionHistory({ userId });
+
+        if (!response) {
+            console.warn('⚠️ La réponse de l’API est undefined ou null');
+            return [];
+        }
+
+        const isArray = Array.isArray(response.data.data);
+
+        const transactions = isArray ? response.data.data : [];
+
+        const filteredTransactions = transactions.filter(
+            transaction => transaction.type_transaction !== 'bonus'
+        );
+
+        return filteredTransactions;
+
+    } catch (error) {
+        console.error("❌ Erreur lors de la récupération des transactions :", error);
+        return [];
     }
 };

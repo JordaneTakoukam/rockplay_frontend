@@ -1,7 +1,8 @@
 import { Box, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import BlockIcon from '@mui/icons-material/Block';
 
 const useStyles = makeStyles(() => ({
     DepositButton: {
@@ -194,9 +195,63 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const DepositBonusCard = ({ cardNumber, minDeposit, bonusPercentage, active = false }) => {
+// const DepositBonusCard = ({ cardNumber, minDeposit, bonusPercentage, active = false }) => {
+//     const classes = useStyles();
+//     const dispatch = useDispatch();
+
+//     const nombreTotalTransactions = 2;
+
+//     const getCardTitle = () => {
+//         if (cardNumber === 1) return '1st';
+//         else if (cardNumber === 2) return '2nd';
+//         else if (cardNumber === 3) return '3rd';
+//         else return '4th';
+//     };
+
+//     const handleDeposit = () => {
+//         if (active)
+//             dispatch({ type: 'SET_WALLET_MODAL', data: true });
+//     };
+
+//     return (
+//         <Box className={clsx(classes.CardBox, active ? '' : classes.DeactiveCard)}>
+//             <Box className={classes.CardTitle}><span>{getCardTitle()}</span> Deposit</Box>
+//             <Box className={classes.UptoBox}>Up to</Box>
+//             <Box className={classes.PercentBox}>{[bonusPercentage]}%</Box>
+//             <Box className={classes.MinDepositBox}>
+//                 <span>Min deposit:</span>
+//                 <Box>
+//                     {minDeposit}$
+//                 </Box>
+//             </Box>
+//             {/* <Button className={classes.DepositButton} onClick={handleDeposit}>Deposit now</Button> */}
+//             <Button
+//                 className={clsx(
+//                     classes.DepositButton,
+//                     !active && classes.DepositButtonInactive
+//                 )}
+//                 onClick={handleDeposit}
+//             >
+//                 Deposit now
+//             </Button>
+
+//         </Box>
+//     );
+// };
+
+// export default DepositBonusCard;
+
+
+
+const DepositBonusCard = ({ cardNumber, minDeposit, bonusPercentage }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const transactionHistory = useSelector((state) => state.transaction.history);
+
+    const nombreTotalTransactions = transactionHistory?.length ?? 0;
+
+
+    const active = (cardNumber === nombreTotalTransactions + 1);
 
     const getCardTitle = () => {
         if (cardNumber === 1) return '1st';
@@ -206,30 +261,42 @@ const DepositBonusCard = ({ cardNumber, minDeposit, bonusPercentage, active = fa
     };
 
     const handleDeposit = () => {
-        if (active)
+        if (active) {
             dispatch({ type: 'SET_WALLET_MODAL', data: true });
+        }
     };
 
+    // Cartes précédentes à l'active => marquées "BONUS EXPIRED"
+    const showExpiredBonus =
+        nombreTotalTransactions >= 1 &&
+        cardNumber < nombreTotalTransactions + 1;
+
     return (
-        <Box className={clsx(classes.CardBox, active ? '' : classes.DeactiveCard)}>
+        <Box className={clsx(classes.CardBox, !active && classes.DeactiveCard)}>
             <Box className={classes.CardTitle}><span>{getCardTitle()}</span> Deposit</Box>
             <Box className={classes.UptoBox}>Up to</Box>
-            <Box className={classes.PercentBox}>{[bonusPercentage]}%</Box>
+            <Box className={classes.PercentBox}>{bonusPercentage}%</Box>
             <Box className={classes.MinDepositBox}>
                 <span>Min deposit:</span>
-                <Box>
-                    {minDeposit}$
-                </Box>
+                <Box>{minDeposit}$</Box>
             </Box>
-            {/* <Button className={classes.DepositButton} onClick={handleDeposit}>Deposit now</Button> */}
+
             <Button
                 className={clsx(
                     classes.DepositButton,
-                    !active && classes.DepositButtonInactive
+                    classes.DepositButtonInactive
                 )}
                 onClick={handleDeposit}
+            // disabled={!active}
             >
-                Deposit now
+                {showExpiredBonus ? (
+                    <>
+                        <BlockIcon fontSize="small" sx={{ marginRight: 1 }} />
+                        BONUS EXPIRED
+                    </>
+                ) : (
+                    'Deposit now'
+                )}
             </Button>
 
         </Box>

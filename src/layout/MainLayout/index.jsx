@@ -7,9 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import clsx from "clsx";
 import MainFooter from "./footer";
 import Config from "config/index";
-import { useEffect } from "react";
-import { getAuthData, getPrivacyData } from "redux/actions/auth";
+import { useEffect, useState } from "react";
+import { getAuthData, getBetHistoryData, getPrivacyData } from "redux/actions/auth";
 import { height } from "@mui/system";
+import { getTransactionHistoryAction, getTransactionHistoryExceptBonusAction } from "redux/actions/transaction";
 
 // Ajoutez ceci dans votre fichier CSS global (ou via CSS-in-JS)
 document.body.style.margin = '0';
@@ -58,6 +59,7 @@ const MainLayout = () => {
     const authData = useSelector((state) => state.authentication);
     const menuOption = useSelector((state) => state.menuOption);
 
+
     useEffect(() => {
         const checkAuthentication = async () => {
             if (!authData.isAuth) {
@@ -79,8 +81,20 @@ const MainLayout = () => {
                             maxBet: response.setting.maxBet
                         };
                         dispatch({ type: 'INIT_SETTING', data: settingData });
+
+                        //
+                        // ---------- gestion de l'historique
+
+                        var responseHistoriques = await getTransactionHistoryExceptBonusAction(response.data._id);
+                        dispatch({ type: 'SET_TRANSACTION_HISTORY', data: responseHistoriques });
+
                     }
+
+
+
+
                 }
+
             }
         }
         checkAuthentication();
@@ -118,7 +132,7 @@ const MainLayout = () => {
         <div>
             <CssBaseline />
             <div style={{ height: '100vh', overflowY: "scroll" }}>
-            <MainHeader />
+                <MainHeader />
 
                 <Box className={classes.MainWrapper}>
                     <MainMenu />

@@ -122,7 +122,7 @@ const DataTable = ({ historyState, gameType = "all" }) => {
         Config?.Root?.socket?.off("updateBetHistory");
         Config?.Root?.socket?.on("updateBetHistory", (data) => {
             setNewBetData(data);
-            console.log(`\nNEW  HISTORY ADD = ${JSON.stringify(data)}`);
+            // console.log(`\nNEW  HISTORY ADD = ${JSON.stringify(data)}`);
 
         });
         // eslint-disable-next-line
@@ -149,7 +149,7 @@ const DataTable = ({ historyState, gameType = "all" }) => {
 
     const getHistoryData = async () => {
         const response = await getBetHistoryData({ gameType });
-        console.log(`getHistoryData = ${JSON.stringify(response)}`);
+        dispatch({ type: 'SET_TRANSACTION_HISTORY', data: response.data });
 
         if (response.status) {
             setTableData([...response.data]);
