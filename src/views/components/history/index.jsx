@@ -272,13 +272,14 @@
 import { makeStyles } from "@mui/styles";
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getTransactionHistoryAction } from "redux/actions/transaction";
 
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { ArrowDownward, ArrowUpward } from "@mui/icons-material";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+import { getTransactionHistory } from "redux/actions/auth";
 
 const useStyles = makeStyles(() => ({
   MainLayout: { paddingTop: 10 },
@@ -348,13 +349,16 @@ const HistoryContainer = () => {
   const currencies = useSelector((state) => state.currencyOption.currencies);
   const [transactions, setTransactions] = useState([]);
 
+  const dispatch = useDispatch();
   useEffect(() => {
     if (authData.isAuth) initFunc();
     // eslint-disable-next-line
   }, []);
 
   const initFunc = async () => {
-    const response = await getTransactionHistoryAction({ userId: authData.userData._id });
+    const response = await getTransactionHistory({ userId: authData.userData._id });
+
+    console.log(`reponse = ${response}`);
 
     if (response.status && Array.isArray(response.data)) {
       const history = response.data
@@ -429,33 +433,31 @@ const HistoryContainer = () => {
 
             const formattedDate = item.date
               ? new Date(item.date).toLocaleString("en-US", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              })
               : "-";
 
             const getDisplayId = () => {
               if (item.type_transaction === "withdraw") {
                 return item.withdraw_request === 1
                   ? "Pending approval"
-                  : `REQ_ID: ${
-                      item.txId
-                        ? `${item.txId.slice(0, 12)}...${item.txId.slice(-8)}`
-                        : item.uuid && item.uuid !== "-"
-                        ? `${item.uuid.slice(0, 10)}...${item.uuid.slice(-8)}`
-                        : "-"
-                    }`;
-              } else {
-                return `TR_ID: ${
-                  item.txId
+                  : `REQ_ID: ${item.txId
                     ? `${item.txId.slice(0, 12)}...${item.txId.slice(-8)}`
                     : item.uuid && item.uuid !== "-"
+                      ? `${item.uuid.slice(0, 10)}...${item.uuid.slice(-8)}`
+                      : "-"
+                  }`;
+              } else {
+                return `TR_ID: ${item.txId
+                  ? `${item.txId.slice(0, 12)}...${item.txId.slice(-8)}`
+                  : item.uuid && item.uuid !== "-"
                     ? `${item.uuid.slice(0, 10)}...${item.uuid.slice(-8)}`
                     : "-"
-                }`;
+                  }`;
               }
             };
 

@@ -1,10 +1,11 @@
-// Prix des devises au 21-11-2024 4pm
-const btcPrice = 97111; // USD
-const ethPrice = 3348;  // USD
-const bnbPrice = 625;   // USD
-const trxPrice = 0.21;  // USD
-const solPrice = 215;   // USD
-const mupPrice = 1;     // USD
+// Prix des devises au 29-05-2025
+const btcPrice = 108782;  // USD
+const ethPrice = 2716.3;  // USD
+const bnbPrice = 684.8;   // USD
+const trxPrice = 0.2773;  // USD
+const solPrice = 172.88;  // USD
+const mupPrice = 0.00000000000005307; // USD
+
 
 const min = 0.1; // $ (montant minimal en USD)
 const max = 500; // $ (montant maximal en USD)
@@ -126,6 +127,8 @@ const configWithdraw = {
         precision: 2
     }
 };
+
+
 
 
 

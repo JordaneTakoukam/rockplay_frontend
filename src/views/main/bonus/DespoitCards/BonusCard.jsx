@@ -194,7 +194,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const DepositBonusCard = ({ cardNumber, minDeposit, percents, active = false }) => {
+const DepositBonusCard = ({ cardNumber, minDeposit, bonusPercentage, active = false }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -214,7 +214,7 @@ const DepositBonusCard = ({ cardNumber, minDeposit, percents, active = false }) 
         <Box className={clsx(classes.CardBox, active ? '' : classes.DeactiveCard)}>
             <Box className={classes.CardTitle}><span>{getCardTitle()}</span> Deposit</Box>
             <Box className={classes.UptoBox}>Up to</Box>
-            <Box className={classes.PercentBox}>{percents[2]}%</Box>
+            <Box className={classes.PercentBox}>{[bonusPercentage]}%</Box>
             <Box className={classes.MinDepositBox}>
                 <span>Min deposit:</span>
                 <Box>
