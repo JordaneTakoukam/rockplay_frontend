@@ -9,9 +9,8 @@ import Config from "config/index";
 import { useToasts } from "react-toast-notifications";
 import { getMyBalances } from "redux/actions/auth";
 import { LoadingContext } from "layout/Context/loading";
-import SwapContainer from "views/components/swap";
 import HistoryContainer from "views/components/history";
-import { configPlayAmount, configWithdraw as configWithdrawImport, precisionByCurrency } from "config/config_play_amount";
+import { configWithdraw as configWithdrawImport, precisionByCurrency } from "config/config_play_amount";
 import { cryptoAddressValidator } from "config/validate_crypto_adress";
 
 const useStyles = makeStyles(() => ({
