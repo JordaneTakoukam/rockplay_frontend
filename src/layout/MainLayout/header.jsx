@@ -547,7 +547,10 @@ const MainHeader = () => {
 
                                     // let currencyBalance = (authData.balanceData && authData.balanceData.length > 0) ? authData.balanceData.find((data) => data.coinType === currency.name) : { balance: 0 };
 
+                                    // ---------------- probleme de typage
                                     return (
+                                        // <p>{JSON.stringify(currencyBalance)} </p>
+                                        // <p>{JSON.stringify({ coinType: currency.name, type: currencyBalance.type })}</p>
                                         <MenuItem key={index} value={JSON.stringify({ coinType: currency.name, type: currencyBalance.type })} className={classes.CustomMenuItem}>
                                             <img className={classes.CurrencyIcon} src={`/assets/images/coins/${currency.name.toLowerCase()}.png`} alt='icon' />
                                             <span className={classes.CoinAmountSpan}>

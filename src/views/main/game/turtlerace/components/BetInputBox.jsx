@@ -381,15 +381,15 @@ const BetInputBox = () => {
                 <Box className={classes.TurtleSelectBox}>
                     <Button disabled={buttonDisabled} onClick={() => handleTurtleNum(0)} className={clsx(classes.TurtleButton, classes.YellowButton, turtleNum === 0 ? classes.ActivedYellow : '')}>
                         <span>Yellow</span>
-                        <Box>2.94</Box>
+                        <Box>1.94</Box>
                     </Button>
                     <Button disabled={buttonDisabled} onClick={() => handleTurtleNum(1)} className={clsx(classes.TurtleButton, classes.RedButton, turtleNum === 1 ? classes.ActivedRed : '')}>
                         <span>Red</span>
-                        <Box>2.94</Box>
+                        <Box>1.94</Box>
                     </Button>
                     <Button disabled={buttonDisabled} onClick={() => handleTurtleNum(2)} className={clsx(classes.TurtleButton, classes.BlueButton, turtleNum === 2 ? classes.ActivedBlue : '')}>
                         <span>Blue</span>
-                        <Box>2.94</Box>
+                        <Box>1.94</Box>
                     </Button>
                 </Box>
                 <Box className={classes.BetButtonsBox}>

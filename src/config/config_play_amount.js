@@ -69,65 +69,72 @@ const roundToCurrencyPrecision = (amount, currency, maxPrecision = null) => {
 
 
 const configWithdraw = {
-    withdraw_fee: 1, // en pourcentage
+  withdraw_fee: 1, // en pourcentage
 
-    // Blockbee min = 0.00008 BTC (~7.58 $)
-    btc: {
-        minDeposit: 0.00011, // ~10.41 $
-        min: 0.00032,        // ~30.29 $
-        max: 0.0032,         // ~302.94 $
-        precision: 7
-    },
+  // Blockbee min = 0.00008 BTC (~7.58 $)
+  btc: {
+    minDeposit: 0.00012, // ~11.34 $
+    min: 0.0002,        // ~17.01 $
+    max: 0.0032,         // ~301.95 $
+    precision: 8
+  },
 
-    // Blockbee min = 0.0045 ETH (~8.18 $)
-    eth: {
-        minDeposit: 0.0055,  // ~10.01 $
-        min: 0.07,           // ~127.20 $
-        max: 0.17,           // ~308.92 $
-        precision: 4
-    },
+  // Blockbee min = 0.0045 ETH (~8.18 $)
+  eth: {
+    minDeposit: 0.0055,  // ~10.05 $
+    min: 0.00825,        // ~15.08 $
+    max: 0.17,           // ~310.62 $
+    precision: 6
+  },
 
-    // Blockbee min = 10 TRX (~2.50 $)
-    trx: {
-        minDeposit: 12,      // ~3.00 $
-        min: 20,             // ~5.00 $
-        max: 1200,           // ~300.00 $
-        precision: 2
-    },
+  // Blockbee min = 10 TRX (~2.50 $)
+  trx: {
+    minDeposit: 12,      // ~3.00 $
+    min: 20,             // ~4.50 $
+    max: 1200,           // ~300.00 $
+    precision: 2
+  },
 
-    // Blockbee min = 0.001 BNB (~0.59 $)
-    bnb: {
-        minDeposit: 0.002,   // ~1.18 $
-        min: 0.01,           // ~5.91 $
-        max: 0.51,           // ~301.67 $
-        precision: 4
-    },
+  // Blockbee min = 0.001 BNB (~0.59 $)
+  bnb: {
+    minDeposit: 0.002,   // ~1.18 $
+    min: 0.005,          // ~1.77 $
+    max: 0.51,           // ~301.90 $
+    precision: 5
+  },
 
-    // Blockbee min = 0.0005 BCH (~0.18 $)
-    bch: {
-        minDeposit: 0.001,   // ~0.36 $
-        min: 0.05,           // ~18.03 $
-        max: 0.8,            // ~288.45 $
-        precision: 4
-    },
+  // Blockbee min = 0.0005 BCH (~0.18 $)
+  bch: {
+    minDeposit: 0.001,   // ~0.36 $
+    min: 0.002,         // ~0.54 $
+    max: 0.8,            // ~288.06 $
+    precision: 4
+  },
 
-    // Blockbee min = 0.002 LTC (~0.18 $)
-    ltc: {
-        minDeposit: 0.003,   // ~0.26 $
-        min: 0.3,            // ~26.31 $
-        max: 3.5,            // ~307.96 $
-        precision: 4
-    },
+  // Blockbee min = 0.002 LTC (~0.18 $)
+  ltc: {
+    minDeposit: 0.003,   // ~0.26 $
+    min: 0.005,         // ~0.39 $
+    max: 3.5,            // ~304.37 $
+    precision: 4
+  },
 
-    // Blockbee min = 10 DOGE (~1.73 $)
-    doge: {
-        minDeposit: 12,      // ~2.08 $
-        min: 150,            // ~25.96 $
-        max: 1800,           // ~311.52 $
-        precision: 2
-    }
+  // Blockbee min = 10 DOGE (~1.73 $)
+  doge: {
+    minDeposit: 12,      // ~2.08 $
+    min: 20,             // ~3.12 $
+    max: 1800,           // ~312.30 $
+    precision: 2
+  },
+
+  // Blockbee min = 0.004 SOL (~0.59 $)
+  sol: {
+    minDeposit: 0.006,   // ~0.88 $
+    min: 0.01,          // ~1.32 $
+    max: 2,              // ~294.00 $
+    precision: 4
+  }
 };
-
 
 
 

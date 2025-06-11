@@ -236,6 +236,7 @@ const GamePanel = () => {
                             <CircleItem length={24} color={'#ff9314'} />
                             <span className={classes.HistoryTitleSpan}>Yellow</span>
                         </Box>
+                        {/* <span className={classes.HistoryCount}>{winnerCount[0]}</span> */}
                         <span className={classes.HistoryCount}>{winnerCount[0]}</span>
                     </Box>
                     <Box className={clsx(classes.HistoryCountBox, classes.RedCard)}>
