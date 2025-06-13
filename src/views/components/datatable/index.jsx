@@ -4,7 +4,7 @@ import Config from "config/index";
 import { useEffect, useState } from "react";
 import { getBetHistoryData } from "redux/actions/auth";
 import { useToasts } from "react-toast-notifications";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { roundToCurrencyPrecision } from "config/config_play_amount";
 
 const useStyles = makeStyles(() => ({
@@ -112,20 +112,23 @@ const DataTable = ({ historyState, gameType = "all" }) => {
     const [tableData, setTableData] = useState([]);
     const [newBetData, setNewBetData] = useState(null);
 
+
+    const authData = useSelector((state) => state.authentication);
+    const userId = authData?.userData?._id || null;
+    const limit = 10;
+
+
     useEffect(() => {
 
         getHistoryData();
         // eslint-disable-next-line
-    }, [historyState]);
+    }, [historyState, gameType]);
 
     useEffect(() => {
         Config?.Root?.socket?.off("updateBetHistory");
         Config?.Root?.socket?.on("updateBetHistory", (data) => {
             setNewBetData(data);
-            // console.log(`\nNEW  HISTORY ADD = ${JSON.stringify(data)}`);
-
         });
-        // eslint-disable-next-line
     }, [dispatch]);
 
     useEffect(() => {
@@ -133,22 +136,27 @@ const DataTable = ({ historyState, gameType = "all" }) => {
             let oldData = tableData;
             if (Array.isArray(newBetData)) {
                 oldData = newBetData.concat(oldData);
-            }
-            else {
+            } else {
                 oldData = [newBetData].concat(oldData);
             }
-            if (oldData.length > 10) {
-                oldData.splice(10, oldData.length - 10);
+            // Utiliser la limite dynamique
+            if (oldData.length > limit) {
+                oldData.splice(limit, oldData.length - limit);
             }
             setTableData([...oldData]);
-
-
         }
         // eslint-disable-next-line
     }, [newBetData]);
 
+
     const getHistoryData = async () => {
-        const response = await getBetHistoryData({ gameType });
+        const params = {
+            gameType,
+            limit,
+            userId: historyState == 1 ? userId : null,
+        };
+
+        const response = await getBetHistoryData(params);
         dispatch({ type: 'SET_TRANSACTION_HISTORY', data: response.data });
 
         if (response.status) {

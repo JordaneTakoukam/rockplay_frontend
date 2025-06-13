@@ -2,7 +2,6 @@ import { Box, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
 import { useState } from "react";
-// import { useSelector } from "react-redux";
 import DataTable from "views/components/datatable";
 
 const useStyles = makeStyles(() => ({
@@ -12,7 +11,6 @@ const useStyles = makeStyles(() => ({
     },
     HistoryTabBox: {
         display: 'flex',
-        // borderBottom: '1px solid #432b88',
         padding: '0px 40px',
         '-webkit-box-pack': 'unset',
         justifyContent: 'unset'
@@ -90,21 +88,38 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const HistoryBox = () => {
+const HistoryTableWidget = ({ gameType, initialHistoryState = 0 }) => {
     const classes = useStyles();
-    const [tabState, setTabState] = useState(0);
+    const [historyState, setHistoryState] = useState(initialHistoryState);
 
     return (
         <Box className={classes.HistoryBoxContainer}>
             <Box className={classes.HistoryStateBox}>
-                <Button className={clsx(classes.HistoryTabButton, tabState === 0 ? classes.SelectedButton : '')} onClick={() => setTabState(0)}>My Bets</Button>
-                <Button className={clsx(classes.HistoryTabButton, tabState === 1 ? classes.SelectedButton : '')} onClick={() => setTabState(1)}>All Bets</Button>
+                <Button
+                    className={clsx(
+                        classes.HistoryTabButton,
+                        historyState === 0 ? classes.SelectedButton : ''
+                    )}
+                    onClick={() => setHistoryState(0)}
+                >
+                    All Bets
+                </Button>
+
+                <Button
+                    className={clsx(
+                        classes.HistoryTabButton,
+                        historyState === 1 ? classes.SelectedButton : ''
+                    )}
+                    onClick={() => setHistoryState(1)}
+                >
+                    My Bets
+                </Button>
             </Box>
-            {/* <Box className={classes.HistoryDataBox}>
-                <DataTable gameType="dice" historyState={tabState} />
-            </Box> */}
+            <Box className={classes.HistoryDataBox}>
+                <DataTable gameType={gameType} historyState={historyState} />
+            </Box>
         </Box>
     );
 };
 
-export default HistoryBox;
+export default HistoryTableWidget;

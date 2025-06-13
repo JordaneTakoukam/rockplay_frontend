@@ -10,3 +10,10 @@
         "@media(min-width: 1024px)": {
    
         }
+
+
+
+            return roundToCurrencyPrecision(
+                                                            item.betAmount * item.payout,
+                                                            currency
+                                                        );
