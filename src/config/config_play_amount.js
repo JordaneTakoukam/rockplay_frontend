@@ -1,10 +1,17 @@
-// Prix des devises au 29-05-2025
-const btcPrice = 108782;  // USD
-const ethPrice = 2716.3;  // USD
-const bnbPrice = 684.8;   // USD
-const trxPrice = 0.2773;  // USD
-const solPrice = 172.88;  // USD
-const mupPrice = 0.00000000000005307; // USD
+// 13 - 06 - 2025 a 14h56
+const cryptoPrices = {
+  btc: 104989.00,     // Bitcoin (BTC)
+  eth: 2547.47,       // Ethereum (ETH)
+  bnb: 652.18,        // Binance Coin (BNB)
+  trx: 0.27361,       // TRON (TRX)
+  btc_ln: 0.00006067, // Bitcoin Lightning (LBTC) – très faible valeur actuelle (~0.00006 USD) :contentReference[oaicite:10]{index=10}
+  bch: 418.92,        // Bitcoin Cash (BCH)
+  ltc: 84.06,         // Litecoin (LTC)
+  doge: 0.175117,     // Dogecoin (DOGE)
+  sol: 145.57,        // Solana (SOL)
+  rp: 1               // Crypto du jeu (valeur fictive)
+};
+
 
 
 const min = 0.1; // $ (montant minimal en USD)
@@ -12,58 +19,58 @@ const max = 500; // $ (montant maximal en USD)
 
 // Configuration des précisions par devise
 const precisionByCurrency = {
-    bnb: 5,
+  bnb: 5,
 
 
-    btc: 7,
-    eth: 6,
-    trx: 3,
-    mup: 0,
-    sol: 5,
+  btc: 7,
+  eth: 6,
+  trx: 3,
+  mup: 0,
+  sol: 5,
 };
 
 // Configuration des montants minimum et maximum par devise
 const configPlayAmount = {
-    btc: {
-        min: parseFloat((min / btcPrice).toFixed(precisionByCurrency.btc)),
-        max: parseFloat((max / btcPrice).toFixed(precisionByCurrency.btc)),
-    },
-    eth: {
-        min: parseFloat((min / ethPrice).toFixed(precisionByCurrency.eth)),
-        max: parseFloat((max / ethPrice).toFixed(precisionByCurrency.eth)),
-    },
-    bnb: {
-        min: parseFloat((min / bnbPrice).toFixed(precisionByCurrency.bnb)),
-        max: parseFloat((max / bnbPrice).toFixed(precisionByCurrency.bnb)),
-    },
-    trx: {
-        min: parseFloat((min / trxPrice).toFixed(precisionByCurrency.trx)),
-        max: parseFloat((max / trxPrice).toFixed(precisionByCurrency.trx)),
-    },
-    mup: {
-        min: 0.1,
-        max: parseFloat((max / mupPrice).toFixed(precisionByCurrency.mup)),
-    },
-    sol: {
-        min: parseFloat((min / solPrice).toFixed(precisionByCurrency.sol)),
-        max: parseFloat((max / solPrice).toFixed(precisionByCurrency.sol)),
-    },
+  btc: {
+    min: parseFloat((min / cryptoPrices.btc).toFixed(precisionByCurrency.btc)),
+    max: parseFloat((max / cryptoPrices.btc).toFixed(precisionByCurrency.btc)),
+  },
+  eth: {
+    min: parseFloat((min / cryptoPrices.eth).toFixed(precisionByCurrency.eth)),
+    max: parseFloat((max / cryptoPrices.eth).toFixed(precisionByCurrency.eth)),
+  },
+  bnb: {
+    min: parseFloat((min / cryptoPrices.bnb).toFixed(precisionByCurrency.bnb)),
+    max: parseFloat((max / cryptoPrices.bnb).toFixed(precisionByCurrency.bnb)),
+  },
+  trx: {
+    min: parseFloat((min / cryptoPrices.trx).toFixed(precisionByCurrency.trx)),
+    max: parseFloat((max / cryptoPrices.trx).toFixed(precisionByCurrency.trx)),
+  },
+  mup: {
+    min: 0.1,
+    max: parseFloat((max / cryptoPrices.rp).toFixed(precisionByCurrency.mup)),
+  },
+  sol: {
+    min: parseFloat((min / cryptoPrices.sol).toFixed(precisionByCurrency.sol)),
+    max: parseFloat((max / cryptoPrices.sol).toFixed(precisionByCurrency.sol)),
+  },
 };
 
 // Fonction d'arrondi selon la précision par devise
 const roundToCurrencyPrecision = (amount, currency, maxPrecision = null) => {
-    // Récupération de la précision par devise
-    let precision = precisionByCurrency[currency];
-    if (precision === undefined) {
-        throw new Error(`Devise inconnue: ${currency}`);
-    }
+  // Récupération de la précision par devise
+  let precision = precisionByCurrency[currency];
+  if (precision === undefined) {
+    throw new Error(`Devise inconnue: ${currency}`);
+  }
 
-    // Appliquer maxPrecision uniquement si la devise est BTC
-    if (currency === 'btc' && maxPrecision !== null && maxPrecision >= 0) {
-        return parseFloat(amount.toFixed(maxPrecision));
-    }
+  // Appliquer maxPrecision uniquement si la devise est BTC
+  if (currency === 'btc' && maxPrecision !== null && maxPrecision >= 0) {
+    return parseFloat(amount.toFixed(maxPrecision));
+  }
 
-    return parseFloat(amount.toFixed(precision));
+  return parseFloat(amount.toFixed(precision));
 };
 
 
