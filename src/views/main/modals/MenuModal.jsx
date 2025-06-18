@@ -222,12 +222,12 @@ const useStyles = makeStyles(() => ({
         justifyContent: 'flex-start',
         gap: 10,
         overflowX: 'auto', // Permet le défilement horizontal
-        overflowY : "hidden",
+        overflowY: "hidden",
         whiteSpace: 'nowrap', // Empêche le contenu de passer à la ligne
         scrollbarWidth: 'thin', // Améliore l'apparence des barres de défilement dans certains navigateurs
         scrollbarColor: '#6c6c6c transparent', // Personnalisation de la couleur (optionnel)
     }
-,    
+    ,
     GameBoxTitle: {
         fontFamily: "'Styrene A Web'",
         fontStyle: "normal",
@@ -271,7 +271,8 @@ const MenuModal = ({ open, setOpen }) => {
     const { showLoading, hideLoading } = useContext(LoadingContext);
 
     const menuOption = useSelector((state) => state.menuOption);
-    
+    // version pour les mobiles
+
     const [menuItems, setMenuItems] = useState([
         {
             url: '/app/home',
@@ -280,7 +281,6 @@ const MenuModal = ({ open, setOpen }) => {
             width: '34px',
             height: '27px'
         },
-       // version pour les mobiles
 
         {
             url: '/app/games',
@@ -447,7 +447,7 @@ const MenuModal = ({ open, setOpen }) => {
                                                     : classes.MenuItem
                                             }
                                         >
-                                            <Link className={classes.MenuItemLink} to={item.url} onClick={() => handleMenuRouter(item.url)}>
+                                            <Link className={classes.MenuItemLink} to={item.child ? "/app/home" : item.url} onClick={() => handleMenuRouter(item.child ? "/app/home" : item.url)}>
                                                 <img src={item.icon} alt="icon" width={item.width} height={item.height} />
                                                 {
                                                     !menuOption.menuVisible && <span>{item.text}</span>
