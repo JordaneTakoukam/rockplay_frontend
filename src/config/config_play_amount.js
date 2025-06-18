@@ -1,14 +1,14 @@
-// 13 - 06 - 2025 a 14h56
+// 18 - 06 - 2025 a 14h56
 const cryptoPrices = {
-  btc: 104989.00,     // Bitcoin (BTC)
-  eth: 2547.47,       // Ethereum (ETH)
-  bnb: 652.18,        // Binance Coin (BNB)
-  trx: 0.27361,       // TRON (TRX)
-  btc_ln: 0.00006067, // Bitcoin Lightning (LBTC) – très faible valeur actuelle (~0.00006 USD) :contentReference[oaicite:10]{index=10}
-  bch: 418.92,        // Bitcoin Cash (BCH)
-  ltc: 84.06,         // Litecoin (LTC)
-  doge: 0.175117,     // Dogecoin (DOGE)
-  sol: 145.57,        // Solana (SOL)
+  btc: 104184.00,     // Bitcoin (BTC)
+  eth: 2488.66,       // Ethereum (ETH)
+  bnb: 639.93,        // Binance Coin (BNB)
+  trx: 0.270813,      // TRON (TRX)
+  btc_ln: 0.00006067, // Bitcoin Lightning (BTC_LN)
+  bch: 460.03,        // Bitcoin Cash (BCH)
+  ltc: 84.43,         // Litecoin (LTC)
+  doge: 0.167006,     // Dogecoin (DOGE)
+  sol: 145.06,        // Solana (SOL)
   rp: 1               // Crypto du jeu (valeur fictive)
 };
 
@@ -19,14 +19,13 @@ const max = 500; // $ (montant maximal en USD)
 
 // Configuration des précisions par devise
 const precisionByCurrency = {
-  bnb: 5,
+  btc: 6,
+  bnb: 4,
+  eth: 4,
+  mup: 4,
+  sol: 4,
+  trx: 2,
 
-
-  btc: 7,
-  eth: 6,
-  trx: 3,
-  mup: 0,
-  sol: 5,
 };
 
 // Configuration des montants minimum et maximum par devise
@@ -65,14 +64,18 @@ const roundToCurrencyPrecision = (amount, currency, maxPrecision = null) => {
     throw new Error(`Devise inconnue: ${currency}`);
   }
 
-  // Appliquer maxPrecision uniquement si la devise est BTC
+  // Cas spécial pour BTC avec maxPrecision = 0
+  if (currency === 'btc' && maxPrecision === 0) {
+    return amount.toFixed(precision); // Retourne une string avec les zéros
+  }
+
+  // Appliquer maxPrecision uniquement si la devise est BTC et maxPrecision est défini
   if (currency === 'btc' && maxPrecision !== null && maxPrecision >= 0) {
     return parseFloat(amount.toFixed(maxPrecision));
   }
 
   return parseFloat(amount.toFixed(precision));
 };
-
 
 
 const configWithdraw = {

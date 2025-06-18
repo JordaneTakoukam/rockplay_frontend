@@ -29,6 +29,7 @@ import FairModal from "views/main/modals/FairModal";
 import { getCurrencies } from "redux/actions/payment";
 import PrivacyModal from "views/main/modals/PrivacyModal";
 import { Link } from "react-router-dom";
+import { roundToCurrencyPrecision } from "config/config_play_amount";
 
 const useStyles = makeStyles(() => ({
     MainHeaderBox: {
@@ -555,6 +556,13 @@ const MainHeader = () => {
                                             <img className={classes.CurrencyIcon} src={`/assets/images/coins/${currency.name.toLowerCase()}.png`} alt='icon' />
                                             <span className={classes.CoinAmountSpan}>
                                                 {Number(currencyBalance.balance).toFixed(currency.decimal)}
+
+                                                {/* {
+                                                    roundToCurrencyPrecision(
+                                                        Number(currencyBalance.balance),
+                                                        currencyBalance.coinType?.toLowerCase()
+                                                    )
+                                                } */}
                                             </span>
 
                                             <Box className={classes.CoinTypeBox}>{(currency.token === 'native' || currency.token === '') ? currency.name : `${currency.name}(${currency.token})`}</Box>

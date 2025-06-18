@@ -816,7 +816,15 @@ const WalletModal = ({ open, setOpen }) => {
                                             <img className={classes.CurrencyIcon}
                                                 src={`/assets/images/coins/${currencies[withdrawCurrencyType].name.toLowerCase()}.png`}
                                                 alt="icon" />
-                                            {configWithDraw.max.toFixed(precisionByCurrency[currencies[withdrawCurrencyType].name.toLowerCase()])}
+                                            {configWithDraw.max.toFixed(precisionByCurrency[currencies[withdrawCurrencyType].name.toLowerCase()])
+                                            
+                                            
+                                            // roundToCurrencyPrecision(
+                                            // item.betAmount,
+                                            // item.coinType?.coinType?.toLowerCase()
+                                            // )
+                                            
+                                            }
                                         </Box>
                                     </Box>
                                     {/* <Box className={classes.CurrencyBlockRow}>

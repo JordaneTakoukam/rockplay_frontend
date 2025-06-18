@@ -197,7 +197,10 @@ const DataTable = ({ historyState, gameType = "all" }) => {
                                             src={`/assets/images/coins/${item.coinType?.coinType?.toLowerCase() || 'default'}.png`}
                                             sx={{ width: 28, height: 28 }}
                                         />
-                                        <span>{item.betAmount}</span>
+                                        <span>{roundToCurrencyPrecision(
+                                            item.betAmount,
+                                            item.coinType?.coinType?.toLowerCase()
+                                        )}</span>
                                     </Box>
                                 </Box>
                                 <Box style={{ width: '20%' }}>
@@ -206,7 +209,8 @@ const DataTable = ({ historyState, gameType = "all" }) => {
                                             alt={item.coinType?.coinType || 'unknown'}
                                             src={`/assets/images/coins/${item.coinType?.coinType?.toLowerCase() || 'default'}.png`}
                                             sx={{ width: 28, height: 28 }}
-                                        />                                        <span
+                                        />
+                                        <span
                                             className={
                                                 item.roundResult === 'win' || item.roundResult === 'payout' ? classes.WinSpan
                                                     : item.roundResult === 'lost' ? classes.LostSpan

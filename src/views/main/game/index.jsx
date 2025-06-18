@@ -96,27 +96,27 @@ const GamesLayout = () => {
             link: '/app/games/scissor',
             available: false
         },
-        {
-            gameName: 'Dice',
-            gameTitle: 'dice',
-            cardType: 1,
-            link: '/app/games/dice',
-            available: false
-        },
-        {
-            gameName: 'Turtlerace',
-            gameTitle: 'turtle',
-            cardType: 1,
-            link: '/app/games/turtlerace',
-            available: false
-        },
-        {
-            gameName: 'Mines',
-            gameTitle: 'mines',
-            cardType: 1,
-            link: '/app/games/mines',
-            available: false
-        },
+        // {
+        //     gameName: 'Dice',
+        //     gameTitle: 'dice',
+        //     cardType: 1,
+        //     link: '/app/games/dice',
+        //     available: false
+        // },
+        // {
+        //     gameName: 'Turtlerace',
+        //     gameTitle: 'turtle',
+        //     cardType: 1,
+        //     link: '/app/games/turtlerace',
+        //     available: false
+        // },
+        // {
+        //     gameName: 'Mines',
+        //     gameTitle: 'mines',
+        //     cardType: 1,
+        //     link: '/app/games/mines',
+        //     available: false
+        // },
         // {
         //     gameName: 'Slot',
         //     gameTitle: 'slot',
