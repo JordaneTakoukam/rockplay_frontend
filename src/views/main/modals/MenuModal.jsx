@@ -283,7 +283,7 @@ const MenuModal = ({ open, setOpen }) => {
        // version pour les mobiles
 
         {
-            url: '/app/home',
+            url: '/app/games',
             text: 'Games',
             icon: GamesIcon,
             width: '34px',
